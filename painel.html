@@ -72,8 +72,9 @@ nav a:hover,nav a[aria-current]{color:#fff;text-decoration:underline;text-underl
 .topo{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:18px;align-items:start;margin-bottom:18px}
 .pergunta{font-family:var(--font-display);font-weight:700;letter-spacing:-.015em;font-size:clamp(22px,2.6vw,28px);line-height:1.2;margin:0 0 6px;text-wrap:balance}
 .contexto{margin:0;color:var(--muted);max-width:62ch}
-.uso{border-left:2px solid var(--brand);padding:2px 0 2px 16px}
-.uso h3{font-size:13px;font-weight:600;color:var(--brand);margin:0 0 8px}
+.uso{border-top:1.5px solid var(--ink);padding:12px 0 0}
+.uso h3{font-size:15px;font-weight:700;color:var(--ink);margin:0 0 8px}
+.como{margin:0;max-width:68ch;font-size:15.5px;color:var(--muted)}
 .uso ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:15.5px}
 
 .filtros{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:12px 14px;margin-bottom:14px}
@@ -150,6 +151,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
     <a class="mark" href="index.html">Eduardo Vieira</a>
     <nav aria-label="Seções">
       <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#ia">IA</a>
       <a href="index.html#projetos">Projetos</a>
       <a href="painel.html" aria-current="page">Painel</a>
       <a href="index.html#contato">Contato</a>
@@ -159,9 +161,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
 
 <main class="wrap">
   <div class="intro">
-    <p class="eyebrow">Painel interativo</p>
-    <h1>Três bases públicas, lidas com as perguntas que uma empresa faria</h1>
-    <p class="lede">Cada aba parte de uma decisão de negócio e mostra os indicadores que eu entregaria para quem precisa decidir. Use os filtros para explorar. O código de cada análise está no GitHub.</p>
+    <p class="eyebrow">Painel</p>
+    <h1>Consumidor, BNDES e Lei Rouanet</h1>
+    <p class="lede">Juntei aqui os três projetos para quem quiser mexer nos números. Cada aba tem filtros e uma pergunta que guiou a análise.</p>
+    <p class="como">Escrevi o código deste painel com ajuda de IA, do jeito que conto em <a href="index.html#ia">como uso IA</a>. Os números saem dos meus scripts de análise, que estão abertos no GitHub, e conferi cada um contra os resultados de cada projeto.</p>
   </div>
 
   <div class="tabs" role="tablist" aria-label="Bases do painel">
@@ -178,7 +181,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
         <p class="contexto">2,3 milhões de reclamações registradas no Consumidor.gov.br em 2025, contra 1.741 empresas. Responder é quase universal. Resolver, na avaliação do próprio consumidor, é bem mais raro.</p>
       </div>
       <div class="uso">
-        <h3>Como isso ajuda uma empresa</h3>
+        <h3>Onde eu usaria isso</h3>
         <ul>
           <li>Comparar o atendimento com o dos concorrentes do mesmo setor.</li>
           <li>Separar o que é responder do que é resolver, e acompanhar os dois.</li>
@@ -333,7 +336,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
 <footer>
   <div class="wrap">
     <span>Eduardo Vieira · São Carlos, SP</span>
-    <span>Painel feito com dados abertos, sem bibliotecas externas · <a href="index.html">voltar ao início</a></span>
+    <span>Dados abertos · <a href="index.html">voltar ao início</a></span>
   </div>
 </footer>
 

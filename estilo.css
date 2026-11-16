@@ -136,3 +136,8 @@ img{max-width:100%;display:block}
   .ferramentas{grid-template-columns:1fr}
   .projeto figure{padding:8px}
 }
+
+/* como uso IA */
+.ia{background:var(--lavanda)}
+.pubs .t a{text-decoration:underline;text-decoration-thickness:1.5px}
+.pubs .t a:hover{color:var(--roxo)}
