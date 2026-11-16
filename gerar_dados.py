@@ -7,6 +7,7 @@ Lê, nas pastas vizinhas do portfólio,
     ../consumidor/dados/tratados/reclamacoes_2025.csv.gz
     ../bndes/dados/tratados/operacoes.parquet
     ../bndes/resultados/macro_anual.csv
+    ../rouanet/resultados/texto_temas.csv e texto_palavras.csv (gerados por rouanet/textos.py)
 
 e grava um único arquivo pequeno com cubos já agregados. O painel filtra esses cubos no navegador,
 então o site continua estático e abre rápido.
@@ -53,12 +54,19 @@ def rouanet():
               .reset_index())
     pop = pd.read_csv(pasta / "dados/auxiliares/populacao_uf.csv").set_index("uf")["populacao"]
     uf = a.groupby(["ano", "uf", "regiao", "area"])["valor_captado"].sum().reset_index()
+    temas = pd.read_csv(pasta / "resultados/texto_temas.csv", encoding="utf-8-sig")
+    pal = pd.read_csv(pasta / "resultados/texto_palavras.csv", encoding="utf-8-sig")
+    pal = pal[~pal["palavra"].str.contains(" ")]
     return {
         "campos": ["ano", "regiao", "area", "projetos", "aprovado", "captado", "captaram"],
         "cubo": [[int(r.ano), r.regiao, r.area, int(r.projetos), round(r.aprovado), round(r.captado), int(r.captaram)]
                  for r in cubo.itertuples()],
         "uf": [[int(r.ano), r.uf, r.regiao, r.area, round(r.valor_captado)] for r in uf.itertuples() if r.valor_captado > 0],
         "populacao": {k: int(v) for k, v in pop.items()},
+        "temas": [[r.nome, int(r.projetos), round(r.bruta, 4), round(r.ajustada, 4), bool(r.generico)]
+                  for r in temas.itertuples()],
+        "palavras_sim": pal.head(12)["palavra"].replace({"line": "on-line"}).tolist(),
+        "palavras_nao": pal.tail(12)["palavra"].iloc[::-1].tolist(),
     }
 
 

@@ -7,27 +7,27 @@
 <meta name="description" content="Painel interativo de Eduardo Vieira com três bases públicas, atendimento ao consumidor, crédito do BNDES e patrocínio pela Lei Rouanet.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f5f2; --surface:#ffffff; --ink:#16181d; --muted:#5b616d; --line:#e2e0da; --brand:#2a5bd7;
+  --bg:#f7f5f0; --surface:#fcfbf8; --ink:#1b1a17; --muted:#6f6b62; --line:#d9d5ca; --brand:#a8361b;
   --grid:#ebe9e3; --axis:#c3c2b7; --neutral:#a9a69c;
   --c-rouanet:#c2307a; --c-consumidor:#d4561a; --c-bndes:#178a5b;
-  --font-display:"Archivo","Helvetica Neue",Arial,sans-serif;
-  --font-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
-  --font-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --font-display:"Newsreader",Georgia,"Times New Roman",serif;
+  --font-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#121317; --surface:#1b1d23; --ink:#ecedf0; --muted:#a0a6b2; --line:#2c2f37; --brand:#7aa2ff;
+    --bg:#151412; --surface:#1c1b18; --ink:#ece8df; --muted:#9a9487; --line:#34312b; --brand:#e8805f;
     --grid:#262930; --axis:#3a3e47; --neutral:#6b6f78;
     --c-rouanet:#ff6fb0; --c-consumidor:#ff9a5c; --c-bndes:#4fd19a;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#121317; --surface:#1b1d23; --ink:#ecedf0; --muted:#a0a6b2; --line:#2c2f37; --brand:#7aa2ff;
+  --bg:#151412; --surface:#1c1b18; --ink:#ece8df; --muted:#9a9487; --line:#34312b; --brand:#e8805f;
   --grid:#262930; --axis:#3a3e47; --neutral:#6b6f78;
   --c-rouanet:#ff6fb0; --c-consumidor:#ff9a5c; --c-bndes:#4fd19a;
   color-scheme:dark;
@@ -41,15 +41,15 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 
 header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
-.mark{font-family:var(--font-display);font-weight:800;font-size:19px;color:var(--ink);text-decoration:none}
+.mark{font-family:var(--font-display);font-weight:500;font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
 .mark span{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:2px;vertical-align:1px}
 nav{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}
-nav a{color:var(--muted);text-decoration:none;font-weight:600}
+nav a{color:var(--muted);text-decoration:none;font-weight:400}
 nav a:hover,nav a[aria-current]{color:var(--ink)}
 
 .intro{padding:44px 0 20px;display:grid;gap:12px}
-.eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0}
-.intro h1{font-family:var(--font-display);font-weight:800;font-size:clamp(32px,5vw,50px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.eyebrow{font-size:14.5px;color:var(--muted);margin:0}
+.intro h1{font-family:var(--font-display);font-weight:400;font-size:clamp(32px,5vw,50px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
 .intro p.lede{margin:0;max-width:68ch;font-size:19px}
 
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 0;border-bottom:1px solid var(--line)}
@@ -61,29 +61,29 @@ nav a:hover,nav a[aria-current]{color:var(--ink)}
 .aba{padding:24px 0 10px}
 .aba[hidden]{display:none}
 .topo{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:18px;align-items:start;margin-bottom:18px}
-.pergunta{font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2.6vw,28px);line-height:1.2;margin:0 0 6px;text-wrap:balance}
+.pergunta{font-family:var(--font-display);font-weight:500;font-size:clamp(22px,2.6vw,28px);line-height:1.2;margin:0 0 6px;text-wrap:balance}
 .contexto{margin:0;color:var(--muted);max-width:62ch}
-.uso{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:14px 16px}
-.uso h3{font-family:var(--font-mono);font-size:12.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.uso{border-left:2px solid var(--brand);padding:2px 0 2px 16px}
+.uso h3{font-size:13px;font-weight:600;color:var(--brand);margin:0 0 8px}
 .uso ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:15.5px}
 
-.filtros{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
-.filtros label{display:grid;gap:3px;font-size:12.5px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.filtros{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:12px 14px;margin-bottom:14px}
+.filtros label{display:grid;gap:3px;font-size:13px;color:var(--muted)}
 .filtros select{font:inherit;font-size:15px;font-family:var(--font-body);text-transform:none;letter-spacing:0;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 30px 6px 10px;min-width:150px;appearance:none;
   background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 15px) 55%,calc(100% - 10px) 55%;background-size:5px 5px;background-repeat:no-repeat}
 .filtros button{font:inherit;font-size:14px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;margin-left:auto}
 .filtros button:hover{color:var(--ink);border-color:var(--ink)}
 
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
-.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:14px 16px}
 .kpi .rot{font-size:14px;color:var(--muted);line-height:1.3}
-.kpi .val{font-family:var(--font-display);font-weight:800;font-size:clamp(24px,2.6vw,32px);line-height:1.15;font-variant-numeric:tabular-nums;margin-top:4px}
+.kpi .val{font-family:var(--font-display);font-weight:400;font-size:clamp(24px,2.6vw,32px);line-height:1.15;font-variant-numeric:tabular-nums;margin-top:4px}
 .kpi .obs{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.35}
 
 .grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 16px 12px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:16px 16px 12px;min-width:0}
 .card.largo{grid-column:1/-1}
-.card h3{font-family:var(--font-display);font-weight:700;font-size:17.5px;line-height:1.25;margin:0}
+.card h3{font-family:var(--font-display);font-weight:500;font-size:20px;line-height:1.25;margin:0}
 .card .sub{font-size:14px;color:var(--muted);margin:3px 0 8px}
 .legenda{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px;color:var(--muted);margin:0 0 6px}
 .legenda span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--cor);margin-right:6px;vertical-align:-1px}
@@ -93,7 +93,7 @@ nav a:hover,nav a[aria-current]{color:var(--ink)}
 .nota{font-size:13px;color:var(--muted);margin:8px 0 0}
 
 table.rank{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
-table.rank th{font-family:var(--font-mono);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.rank th{font-size:13px;font-weight:500;color:var(--muted);text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
 table.rank th:first-child,table.rank td:first-child{text-align:left}
 table.rank th button{all:unset;cursor:pointer}
 table.rank th button:hover{color:var(--ink)}
@@ -106,6 +106,11 @@ table.rank td.emp small{display:block;font-weight:400;color:var(--muted);font-si
 .barrinha i{display:inline-block;height:8px;border-radius:0 4px 4px 0;background:var(--c);min-width:2px}
 .tabela-rolagem{overflow-x:auto}
 
+.texto-grade{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:28px;margin-top:6px}
+.mini{font-size:13.5px;color:var(--muted);margin:0 0 10px}
+.palavras h4{font-size:13px;font-weight:600;margin:14px 0 4px;color:var(--ink)}
+.palavras p[id]{font-family:var(--font-display);font-size:19px;line-height:1.45;margin:0 0 6px}
+@media (max-width:900px){.texto-grade{grid-template-columns:1fr}}
 .fonte{font-size:13.5px;color:var(--muted);margin:14px 0 0}
 .tt{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--bg);font-size:13.5px;line-height:1.4;padding:7px 10px;border-radius:8px;max-width:260px;opacity:0;transition:opacity .08s;font-variant-numeric:tabular-nums}
 .tt b{display:block;font-weight:600;margin-bottom:2px}
@@ -133,11 +138,11 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
 
 <header class="top">
   <div class="wrap">
-    <a class="mark" href="index.html"><span style="background:var(--c-rouanet)"></span><span style="background:var(--c-consumidor)"></span><span style="background:var(--c-bndes)"></span> Eduardo Vieira</a>
+    <a class="mark" href="index.html">Eduardo Vieira</a>
     <nav aria-label="Seções">
-      <a href="index.html#ajuda">Como ajudo</a>
-      <a href="index.html#projetos">Projetos</a>
-      <a href="painel.html" aria-current="page">Painel</a>
+      <a href="index.html#agregar">O que eu agrego</a>
+      <a href="index.html#casos">Casos</a>
+      <a href="painel.html" aria-current="page">Painel interativo</a>
       <a href="index.html#contato">Contato</a>
     </nav>
   </div>
@@ -294,6 +299,24 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
         <div class="grafico" id="r-reg-graf"></div>
       </div>
     </div>
+    <div class="card largo texto-proj">
+      <h3>O que o texto do projeto diz sobre a chance de captar</h3>
+      <p class="sub">Análise do resumo e dos objetivos de 12.958 projetos aprovados de 2019 a 2022. Este bloco não muda com os filtros</p>
+      <div class="texto-grade">
+        <div>
+          <p class="mini">Parcela dos projetos que captaram, por tema do resumo, ajustada por área, região, valor e ano. Em cinza, temas definidos por texto padronizado</p>
+          <div class="grafico" id="r-temas"></div>
+        </div>
+        <div class="palavras">
+          <p class="mini">Palavras que mais separam os grupos, comparando projetos da mesma área</p>
+          <h4>Mais comuns entre os que captaram</h4>
+          <p id="r-pal-sim"></p>
+          <h4>Mais comuns entre os que não captaram</h4>
+          <p id="r-pal-nao"></p>
+          <p class="mini">Quem capta fala de continuidade, manutenção e programação anual, o vocabulário de instituições que já funcionam. Projetos que copiam o texto da lei ou usam um modelo pronto captam bem menos. É uma associação, não um efeito do texto.</p>
+        </div>
+      </div>
+    </div>
     <p class="fonte">Fonte SALIC, Ministério da Cultura, coleta pela API de dados abertos, e IBGE. <a href="https://github.com/eduardopagvieira/rouanet">Código, método e painel em Power BI no GitHub</a></p>
   </section>
 </main>
@@ -424,10 +447,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
   }
 
   // barras horizontais, uma ou duas séries, rótulos à esquerda e valor na ponta
-  function barras(alvo, {itens, series, fmt, rotulo, destaque = () => false, max}) {
+  function barras(alvo, {itens, series, fmt, rotulo, destaque = () => false, max, rotMax = 170}) {
     const dupla = series.length > 1;
     const alt = dupla ? 30 : 24, pad = 6;
-    const rotW = Math.min(170, Math.max(70, ...itens.map(it => it.rotulo.length * 7.2)));
+    const rotW = Math.min(rotMax, Math.max(70, ...itens.map(it => it.rotulo.length * 7.2)));
     const h = itens.length * (alt + pad) + 6;
     const {svg, w} = novoSvg(alvo, h, rotulo);
     const x0 = rotW + 8, iw = w - x0 - 64;
@@ -440,7 +463,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
       series.forEach((s, j) => {
         const v = it.valores[j], ww = Math.max(v > 0 ? 2 : 0, (v / mx) * iw);
         const yy = dupla ? y0 + j * (hb + 2) : y0 + 3;
-        if (ww > 0) el("path", {d: pathHoriz(x0, yy, ww, hb, 4), fill: s.cor}, svg);
+        if (ww > 0) el("path", {d: pathHoriz(x0, yy, ww, hb, 4), fill: it.cor || s.cor}, svg);
         texto(svg, x0 + ww + 6, yy + hb / 2 + 4, fmt(v), {"font-size": dupla ? 11.5 : 12.5, fill: css("--muted")});
       });
       const alvoHover = el("rect", {x: 0, y: y0 - 3, width: w, height: alt + 6, fill: "transparent"}, svg);
@@ -603,6 +626,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
       soma(rowsReg.filter(r => r[1] === g), 5) / capTot,
       Object.entries(R.populacao).filter(([u]) => REGIAO_UF[u] === g).reduce((s, [, p]) => s + p, 0) / popTot]}));
     barras($("#r-reg-graf"), {itens: porReg, series: sReg, fmt: v => pct(v), max: 1, destaque: it => it.rotulo === reg, rotulo: "Parcela do captado e da população por região"});
+    const larg = $("#r-temas").clientWidth;
+    const temas = R.temas.map(t => ({rotulo: t[0], valores: [t[3]], cor: t[4] ? cinza : null,
+      extra: `${int(t[1])} projetos, ${pct(t[2])} sem ajuste`})).sort((a, b) => b.valores[0] - a.valores[0]);
+    barras($("#r-temas"), {itens: temas, series: [{nome: "Captaram (ajustado)", cor}], fmt: v => pct(v), max: 1,
+      rotMax: larg < 520 ? 150 : 270, rotulo: "Taxa de captação ajustada por tema do resumo"});
+    $("#r-pal-sim").textContent = R.palavras_sim.join(", ");
+    $("#r-pal-nao").textContent = R.palavras_nao.join(", ");
   }
 
   // ---------- abas, filtros e redesenho ----------

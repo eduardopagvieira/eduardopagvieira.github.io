@@ -4,147 +4,165 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eduardo Vieira</title>
-<meta name="description" content="Eduardo Vieira, cientista político e analista de dados. Coleta, tratamento, análise e visualização de dados públicos e de redes sociais.">
+<meta name="description" content="Eduardo Vieira, analista de dados e cientista político. Indicadores, painéis e análise de texto com dados públicos e de redes sociais.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-/* Layout: abertura curta, faixa de números, projetos em blocos largos com gráfico real, frentes de pesquisa em grade colorida */
+/* Estilo de relatório impresso. Réguas finas no lugar de cartões, uma cor de destaque, serifa nos títulos. */
 :root{
-  --bg:#f6f5f2;
-  --surface:#ffffff;
-  --ink:#16181d;
-  --muted:#5b616d;
-  --line:#e2e0da;
-  --brand:#2a5bd7;
-  --c-rouanet:#c2307a;
-  --c-consumidor:#e0621f;
-  --c-bndes:#178a5b;
-  --c-cci:#2a5bd7;
-  --c-observa:#8a3ffc;
-  --c-mestrado:#1d3a6e;
-  --c-tcc:#0f8a8f;
-  --c-redes:#b8860b;
-  --font-display:"Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
-  --font-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  --paper:#f7f5f0;
+  --ink:#1b1a17;
+  --ink-2:#4a4740;
+  --muted:#7a766c;
+  --rule:#d9d5ca;
+  --rule-strong:#1b1a17;
+  --accent:#a8361b;
+  --fig-bg:#fcfcfb;
+  --serif:"Newsreader", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#121317; --surface:#1b1d23; --ink:#ecedf0; --muted:#a0a6b2; --line:#2c2f37; --brand:#7aa2ff;
-    --c-rouanet:#ff6fb0; --c-consumidor:#ff9a5c; --c-bndes:#4fd19a; --c-cci:#7aa2ff; --c-observa:#b98cff; --c-mestrado:#8fb0ea; --c-tcc:#4fd0d4; --c-redes:#e9c05a;
+    --paper:#151412; --ink:#ece8df; --ink-2:#c3bdb0; --muted:#8f897c; --rule:#34312b; --rule-strong:#ece8df; --accent:#e8805f;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#121317; --surface:#1b1d23; --ink:#ecedf0; --muted:#a0a6b2; --line:#2c2f37; --brand:#7aa2ff;
-  --c-rouanet:#ff6fb0; --c-consumidor:#ff9a5c; --c-bndes:#4fd19a; --c-cci:#7aa2ff; --c-observa:#b98cff; --c-mestrado:#8fb0ea; --c-tcc:#4fd0d4; --c-redes:#e9c05a;
+  --paper:#151412; --ink:#ece8df; --ink-2:#c3bdb0; --muted:#8f897c; --rule:#34312b; --rule-strong:#ece8df; --accent:#e8805f;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17.5px;line-height:1.6}
-a{color:var(--brand);text-underline-offset:3px}
-a:focus-visible,button:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:3px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6}
+a{color:inherit;text-decoration-color:var(--accent);text-decoration-thickness:1px;text-underline-offset:4px}
+a:hover{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 img{max-width:100%;display:block}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
-header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
-header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
-.mark{font-family:var(--font-display);font-weight:800;font-size:19px;color:var(--ink);text-decoration:none}
-.mark span{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:2px;vertical-align:1px}
-nav{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}
-nav a{color:var(--muted);text-decoration:none;font-weight:600}
-nav a:hover{color:var(--ink)}
+/* topo */
+.top{border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:12px 28px;flex-wrap:wrap;padding-top:18px;padding-bottom:16px}
+.nome{font-family:var(--serif);font-size:22px;font-weight:500;text-decoration:none;letter-spacing:-.01em}
+nav{display:flex;gap:6px 22px;flex-wrap:wrap;font-size:14.5px}
+nav a{text-decoration:none;color:var(--ink-2)}
+nav a:hover{color:var(--accent)}
 
-.hero{padding:60px 0 32px;display:grid;gap:18px}
-.hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:0;letter-spacing:-.01em;text-wrap:balance}
-.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--c-rouanet),var(--c-consumidor) 50%,var(--c-bndes));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lede{max-width:62ch;font-size:20px;margin:0;color:var(--ink)}
-.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
-.btn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;padding:9px 15px;border-radius:999px;font-size:15px;font-weight:600}
-.btn:hover{border-color:var(--ink)}
-.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* abertura */
+.abertura{padding:72px 0 56px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px}
+.abertura .papel{grid-column:1 / span 12;font-size:14.5px;color:var(--muted);margin:0 0 22px}
+.abertura h1{grid-column:1 / span 10;font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.6vw,66px);line-height:1.06;letter-spacing:-.018em;margin:0;text-wrap:balance}
+.abertura h1 i{color:var(--accent)}
+.abertura .texto{grid-column:1 / span 7;margin:32px 0 0;font-size:19px;color:var(--ink-2);max-width:60ch}
+.abertura .acoes{grid-column:1 / span 12;margin-top:30px;display:flex;flex-wrap:wrap;gap:12px 28px;font-size:15.5px}
+.cta{display:inline-block;background:var(--ink);color:var(--paper);text-decoration:none;padding:11px 20px;font-weight:500}
+.cta:hover{background:var(--accent);color:#fff}
+.acoes a:not(.cta){align-self:center}
 
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:10px 0 0}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;border-top:5px solid var(--c)}
-.stat b{display:block;font-family:var(--font-display);font-weight:800;font-size:30px;font-variant-numeric:tabular-nums;color:var(--c);line-height:1.1}
-.stat span{font-size:15px;color:var(--muted);display:block;margin-top:4px;line-height:1.4}
+/* números em linha, como tabela de relatório */
+.numeros{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule)}
+.numeros div{padding:16px 18px 18px 0}
+.numeros div + div{padding-left:18px;border-left:1px solid var(--rule)}
+.numeros b{display:block;font-family:var(--serif);font-weight:400;font-size:34px;line-height:1.1;font-variant-numeric:lining-nums tabular-nums}
+.numeros span{display:block;font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4}
 
-section{padding:56px 0 8px}
-.eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
-h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4vw,38px);line-height:1.1;margin:0 0 10px;text-wrap:balance}
-.sub{color:var(--muted);margin:0 0 28px;max-width:66ch}
+/* seções com rótulo à esquerda */
+.secao{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;padding:64px 0 8px}
+.secao > .rotulo{grid-column:1 / span 3}
+.secao > .corpo{grid-column:4 / span 9}
+.rotulo{position:sticky;top:20px;align-self:start;padding-top:14px;border-top:1px solid var(--rule-strong)}
+.rotulo .n{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.rotulo h2{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.15;margin:4px 0 0;letter-spacing:-.01em}
+.corpo{padding-top:14px;border-top:1px solid var(--rule)}
+.corpo > .intro{font-family:var(--serif);font-size:23px;line-height:1.4;margin:0 0 30px;max-width:40ch;color:var(--ink)}
 
-.project{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:28px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px;margin-bottom:22px;border-left:8px solid var(--c)}
-.project:nth-of-type(even){grid-template-columns:minmax(0,6fr) minmax(0,5fr)}
-.project:nth-of-type(even) .txt{order:2}
-.project .tag-proj{display:inline-block;font-family:var(--font-mono);font-size:12.5px;font-weight:500;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);padding:3px 10px;border-radius:999px;margin-bottom:10px}
-.project h3{font-family:var(--font-display);font-weight:800;font-size:27px;line-height:1.15;margin:0 0 8px;text-wrap:balance}
-.project .q{font-size:18px;margin:0 0 14px;color:var(--ink)}
-.project ul{margin:0 0 16px;padding-left:0;list-style:none;display:grid;gap:9px}
-.project li{padding-left:22px;position:relative;font-size:16.5px}
-.project li::before{content:"";position:absolute;left:0;top:.55em;width:10px;height:10px;border-radius:50%;background:var(--c)}
-.project li b{font-variant-numeric:tabular-nums}
-.fig{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#fcfcfa}
-.fig + .fig{margin-top:12px}
-.figcap{font-size:13.5px;color:var(--muted);margin-top:6px}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
-.tag{font-family:var(--font-mono);font-size:12.5px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 8px;color:var(--ink)}
-.gh{font-weight:600;color:var(--c);text-decoration:none;border-bottom:2px solid currentColor}
+/* lista de contribuições */
+.itens{list-style:none;margin:0;padding:0;counter-reset:i}
+.itens > li{display:grid;grid-template-columns:2fr 3fr;gap:8px 32px;padding:20px 0 22px;border-bottom:1px solid var(--rule)}
+.itens > li:first-child{padding-top:0}
+.itens h3{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.25;margin:0}
+.itens p{margin:0;color:var(--ink-2);font-size:16px}
+.itens .prova{display:block;margin-top:10px;font-size:14.5px;color:var(--ink)}
+.itens .prova b{font-weight:600}
 
-.fronts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-.front{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
-.front::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:var(--c)}
-.front .who{font-family:var(--font-mono);font-size:12.5px;color:var(--c);font-weight:500;margin-top:4px}
-.front h3{font-family:var(--font-display);font-weight:700;font-size:21px;line-height:1.2;margin:0;text-wrap:balance}
-.front dl{margin:0;display:grid;gap:6px}
-.front dt{font-size:12.5px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-.front dd{margin:0 0 4px;font-size:15.5px}
+/* estudos de caso */
+.caso{padding:0 0 44px;margin:0 0 40px;border-bottom:1px solid var(--rule)}
+.caso:last-child{border-bottom:0;margin-bottom:0}
+.caso .meta{font-size:14px;color:var(--muted);margin:0 0 8px}
+.caso h3{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3vw,32px);line-height:1.15;letter-spacing:-.01em;margin:0 0 10px}
+.caso .pergunta{font-size:18px;color:var(--ink-2);margin:0 0 24px;max-width:58ch}
+.achados{display:grid;grid-template-columns:repeat(3,1fr);gap:0 24px;margin:0 0 26px;padding:0;list-style:none}
+.achados li{border-top:1px solid var(--rule);padding-top:10px;font-size:15px;color:var(--ink-2)}
+.achados b{display:block;font-family:var(--serif);font-weight:400;font-size:38px;line-height:1.05;color:var(--ink);margin-bottom:6px;font-variant-numeric:lining-nums}
+.olhar{border-left:2px solid var(--accent);padding:2px 0 2px 16px;margin:0 0 26px;max-width:66ch}
+.olhar strong{display:block;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--accent);margin-bottom:2px}
+.olhar p{margin:0;font-size:16px}
+figure{margin:0 0 10px}
+figure img{border:1px solid var(--rule);background:var(--fig-bg)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:8px}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.rodape-caso{display:flex;flex-wrap:wrap;gap:8px 26px;align-items:baseline;font-size:15px;margin-top:18px}
+.rodape-caso .ferr{color:var(--muted);font-size:14px}
 
-.ajuda{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.servico{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;border-top:5px solid var(--c);display:flex;flex-direction:column;gap:8px}
-.servico h3{font-family:var(--font-display);font-size:19px;font-weight:700;line-height:1.2;margin:0}
-.servico p{margin:0;font-size:15.5px}
-.servico .ex{font-size:14px;color:var(--muted);margin-top:auto;padding-top:6px;border-top:1px dashed var(--line)}
-.uso-emp{font-size:15.5px;background:color-mix(in srgb,var(--c) 8%,transparent);border-radius:8px;padding:9px 12px;margin:0 0 16px}
-.uso-emp b{color:var(--c)}
-.acoes{display:flex;flex-wrap:wrap;gap:18px}
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.skill{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
-.skill h3{font-family:var(--font-display);font-size:18px;font-weight:700;margin:0 0 6px}
-.skill p{margin:0 0 12px;font-size:15.5px}
+/* pesquisa em tabela */
+.tabela{width:100%;border-collapse:collapse;font-size:15.5px}
+.tabela th{font-weight:500;text-align:left;font-size:13.5px;color:var(--muted);padding:0 16px 10px 0;border-bottom:1px solid var(--rule-strong)}
+.tabela td{vertical-align:top;padding:16px 16px 16px 0;border-bottom:1px solid var(--rule)}
+.tabela td:first-child{width:22%;color:var(--muted);font-size:14.5px}
+.tabela td .t{font-family:var(--serif);font-size:19px;line-height:1.3;color:var(--ink);display:block;margin-bottom:4px}
+.tabela td:last-child{color:var(--ink-2)}
 
-.pubs{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
-.pubs li{padding:16px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:100px 1fr;gap:16px}
-.pubs .yr{font-family:var(--font-mono);font-size:13.5px;color:var(--muted);padding-top:3px}
-.pubs .t{font-family:var(--font-display);font-size:18.5px;font-weight:700;line-height:1.3}
-.pubs .w{font-size:15px;color:var(--muted);margin-top:3px}
+/* competências */
+.comp{display:grid;grid-template-columns:1fr 1fr;gap:0 32px;margin:0}
+.comp div{border-bottom:1px solid var(--rule);padding:14px 0 16px}
+.comp dt{font-family:var(--serif);font-size:20px;margin:0 0 4px}
+.comp dd{margin:0;color:var(--ink-2);font-size:15.5px}
+.comp .ferr{display:block;margin-top:6px;font-family:var(--mono);font-size:13px;color:var(--muted)}
 
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
-.cols h3{font-family:var(--font-mono);font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}
-.cols ul{margin:0;padding-left:18px}
-.cols li{margin-bottom:8px;font-size:16px}
+/* publicações */
+.pubs{list-style:none;margin:0;padding:0}
+.pubs li{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:14px 0 16px;border-bottom:1px solid var(--rule)}
+.pubs li:first-child{padding-top:0}
+.pubs .ano{font-family:var(--mono);font-size:13.5px;color:var(--muted);padding-top:4px}
+.pubs .t{font-family:var(--serif);font-size:19px;line-height:1.3}
+.pubs .w{font-size:14.5px;color:var(--muted);margin-top:2px}
 
-.contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:34px 28px;margin:56px 0 0}
-.contact h2{color:var(--bg)}
-.contact p{color:color-mix(in srgb,var(--bg) 78%,var(--ink));margin:0 0 20px;max-width:60ch}
-.contact .btn{background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 40%,var(--ink))}
-.contact .btn:hover{border-color:var(--bg)}
-.contact .btn.primary{background:var(--bg);color:var(--ink);border-color:var(--bg)}
-footer{padding:28px 0 44px;color:var(--muted);font-size:14px}
-footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-between}
+.tres{display:grid;grid-template-columns:repeat(3,1fr);gap:0 28px}
+.tres h3{font-size:13.5px;font-weight:600;color:var(--muted);margin:0 0 8px}
+.tres p{margin:0 0 10px;font-size:15.5px;color:var(--ink-2)}
 
-@media (max-width:820px){
-  .project,.project:nth-of-type(even){grid-template-columns:1fr;padding:20px}
-  .project:nth-of-type(even) .txt{order:0}
+/* contato */
+.contato{padding:80px 0 30px;border-top:1px solid var(--rule-strong);margin-top:72px}
+.contato p{margin:0 0 6px;color:var(--muted);font-size:15px}
+.contato .mail{font-family:var(--serif);font-size:clamp(28px,4.4vw,48px);line-height:1.1;letter-spacing:-.015em;text-decoration:none;border-bottom:1px solid var(--accent)}
+.contato .outros{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:26px;font-size:15.5px}
+footer{padding:26px 0 40px;color:var(--muted);font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px}
+
+@media (max-width:900px){
+  .secao > .rotulo,.secao > .corpo{grid-column:1 / -1}
+  .rotulo{position:static;border-top:1px solid var(--rule-strong)}
+  .corpo{border-top:0;padding-top:18px}
+  .abertura h1,.abertura .texto{grid-column:1 / -1}
+  .itens > li{grid-template-columns:1fr}
 }
-@media (max-width:520px){
+@media (max-width:640px){
   body{font-size:16.5px}
-  .hero{padding-top:38px}
-  .pubs li{grid-template-columns:1fr;gap:4px}
+  .wrap{padding:0 16px}
+  .abertura{padding:44px 0 40px}
+  .numeros{grid-template-columns:1fr 1fr}
+  .numeros div:nth-child(3){padding-left:0;border-left:0}
+  .numeros div:nth-child(n+3){border-top:1px solid var(--rule)}
+  .achados,.duas,.comp,.tres{grid-template-columns:1fr}
+  .achados li{padding-bottom:12px}
+  .tabela thead{display:none}
+  .tabela tr{display:block;border-bottom:1px solid var(--rule);padding:12px 0}
+  .tabela td{display:block;border:0;padding:2px 0;width:auto!important}
+  .pubs li{grid-template-columns:1fr;gap:2px}
 }
 </style>
 </head>
@@ -152,14 +170,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
 
 <header class="top">
   <div class="wrap">
-    <a class="mark" href="#inicio"><span style="background:var(--c-rouanet)"></span><span style="background:var(--c-consumidor)"></span><span style="background:var(--c-bndes)"></span> Eduardo Vieira</a>
+    <a class="nome" href="#inicio">Eduardo Vieira</a>
     <nav aria-label="Seções">
-      <a href="#ajuda">Como ajudo</a>
-      <a href="#projetos">Projetos</a>
-      <a href="painel.html">Painel</a>
+      <a href="#agregar">O que eu agrego</a>
+      <a href="#casos">Casos</a>
+      <a href="painel.html">Painel interativo</a>
       <a href="#pesquisa">Pesquisa</a>
-      <a href="#competencias">Competências</a>
-      <a href="#publicacoes">Publicações</a>
       <a href="#contato">Contato</a>
     </nav>
   </div>
@@ -167,269 +183,185 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
 
 <main class="wrap" id="inicio">
 
-  <div class="hero">
-    <p class="eyebrow">Análise de dados · Pesquisa · Inteligência de mercado</p>
-    <h1>Dados públicos e de redes sociais, da coleta ao <em>gráfico que responde a pergunta</em>.</h1>
-    <p class="lede">Transformo bases grandes, públicas ou de redes sociais, em indicadores, painéis e relatórios que ajudam uma equipe a decidir. Trabalho em Python e Power BI, da coleta automatizada à apresentação para gestores. Sou cientista político, mestrando na UFSCar e pesquisador colaborador do CCI/CEBRAP.</p>
-    <div class="links">
-      <a class="btn primary" href="painel.html">Ver painel interativo</a>
-      <a class="btn" href="#projetos">Ver projetos</a>
-      <a class="btn" href="https://github.com/eduardopagvieira">GitHub</a>
-      <a class="btn" href="#contato">LinkedIn</a>
-      <a class="btn" href="http://lattes.cnpq.br/2723181992829140">Lattes</a>
+  <div class="abertura">
+    <p class="papel">Analista de dados e cientista político · São Carlos, SP</p>
+    <h1>Números que a sua equipe pode defender numa reunião, e o <i>porquê</i> por trás deles.</h1>
+    <p class="texto">Coleto, trato e analiso bases grandes em Python, e entrego indicadores, painéis em Power BI e relatórios curtos. A formação em ciência política entra no que vem antes do gráfico. Escolher o que medir, desconfiar do indicador fácil e ler texto em escala com método.</p>
+    <div class="acoes">
+      <a class="cta" href="painel.html">Abrir o painel interativo</a>
+      <a href="#casos">Ver os casos</a>
+      <a href="https://github.com/eduardopagvieira">GitHub</a>
+      <a href="http://lattes.cnpq.br/2723181992829140">Lattes</a>
     </div>
   </div>
 
-  <div class="stats" aria-label="Tamanho das bases analisadas">
-    <div class="stat" style="--c:var(--c-bndes)"><b>2,4 mi</b><span>operações de crédito do BNDES, de 2002 a 2026</span></div>
-    <div class="stat" style="--c:var(--c-consumidor)"><b>2,3 mi</b><span>reclamações do Consumidor.gov.br em 2025</span></div>
-    <div class="stat" style="--c:var(--c-rouanet)"><b>63 mil</b><span>projetos culturais da Lei Rouanet coletados pela API do SALIC</span></div>
-    <div class="stat" style="--c:var(--c-cci)"><b>14 mil</b><span>vídeos de YouTube com comentários coletados para o CCI/CEBRAP</span></div>
+  <div class="numeros" aria-label="Tamanho das bases trabalhadas">
+    <div><b>2,4 mi</b><span>operações de crédito do BNDES, 2002 a 2026</span></div>
+    <div><b>2,3 mi</b><span>reclamações do Consumidor.gov.br em 2025</span></div>
+    <div><b>63 mil</b><span>projetos da Lei Rouanet, com o texto de cada um</span></div>
+    <div><b>14 mil</b><span>vídeos do YouTube com comentários, para o CCI/CEBRAP</span></div>
   </div>
 
-  <section id="ajuda">
-    <p class="eyebrow">Para a sua equipe</p>
-    <h2>Como posso agregar</h2>
-    <p class="sub">O que eu faço no dia a dia de um time de dados, de pesquisa ou de marketing, com exemplos que estão neste site.</p>
-    <div class="ajuda">
-      <article class="servico" style="--c:var(--c-consumidor)">
-        <h3>Inteligência de mercado e concorrência</h3>
-        <p>Comparo a empresa com concorrentes usando bases públicas e indicadores claros, para mostrar onde ela está melhor ou pior.</p>
-        <p class="ex">Exemplo. Ranking de atendimento das empresas mais reclamadas no Consumidor.gov.br.</p>
+  <section class="secao" id="agregar">
+    <div class="rotulo"><span class="n">01</span><h2>O que um cientista social agrega a um time de dados</h2></div>
+    <div class="corpo">
+      <p class="intro">Ferramenta se aprende rápido. O que demora é saber se o número responde mesmo à pergunta. É isso que a pesquisa em ciências sociais treina.</p>
+      <ol class="itens">
+        <li>
+          <h3>Medir o conceito certo</h3>
+          <p>Antes de calcular, pergunto o que o indicador deveria capturar e o que ele de fato conta. Indicador mal construído leva a meta errada.
+            <span class="prova">No Consumidor.gov.br, o índice oficial de solução é <b>81%</b>. Contando só quem avaliou o atendimento, é <b>44%</b>, porque o índice oficial trata como resolvida toda reclamação sem avaliação.</span></p>
+        </li>
+        <li>
+          <h3>Saber o que a base não mostra</h3>
+          <p>Viés de seleção, dados incompletos e comparações injustas aparecem em qualquer base de empresa. Identificar isso cedo evita conclusões que desmoronam depois.
+            <span class="prova">Na Lei Rouanet, a taxa de captação parecia ser <b>23%</b>. Era um efeito dos projetos que ainda estavam captando. Com os projetos de prazo encerrado, ela é <b>52%</b>.</span></p>
+        </li>
+        <li>
+          <h3>Ler texto em escala, com método</h3>
+          <p>Comentários, avaliações, chamados de SAC e respostas abertas viram dado quando há livro de códigos, teste de confiabilidade e modelos de texto bem escolhidos.
+            <span class="prova">Nos 13 mil resumos de projetos da Rouanet, os que copiam o texto da lei captam <b>26%</b>, contra <b>51%</b> na média. No mestrado, codificação em equipe com alfa de Krippendorff de <b>0,94</b>.</span></p>
+        </li>
+        <li>
+          <h3>Separar associação de causa</h3>
+          <p>Comparo grupos parecidos, controlo o que precisa ser controlado e digo com clareza até onde o dado vai. Recomendação honesta vale mais que gráfico bonito.
+            <span class="prova">Os temas dos projetos culturais foram comparados mantendo área, região, valor e ano constantes, com regressão logística.</span></p>
+        </li>
+        <li>
+          <h3>Entender regras, instituições e pessoas</h3>
+          <p>Muito padrão nos dados vem de uma regra, de um incentivo ou de um comportamento. Conhecer a regra explica o número e ajuda a prever o próximo.
+            <span class="prova">Quase todo o patrocínio da Rouanet usa o Artigo 18, que devolve 100% do valor no imposto. Isso explica por que o dinheiro segue a sede das empresas e se concentra no Sudeste.</span></p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao" id="casos">
+    <div class="rotulo"><span class="n">02</span><h2>Casos com dados abertos</h2></div>
+    <div class="corpo">
+      <p class="intro">Três projetos completos, da coleta ao painel. Todos estão no <a href="painel.html">painel interativo</a>, com filtros.</p>
+
+      <article class="caso">
+        <p class="meta">Cultura e patrocínio · SALIC, Ministério da Cultura</p>
+        <h3>Lei Rouanet. Quem consegue patrocínio e por quê</h3>
+        <p class="pergunta">Quanto do valor aprovado vira dinheiro captado, quem capta e o que o texto do projeto diz sobre a chance de captar?</p>
+        <ul class="achados">
+          <li><b>1%</b>dos proponentes ficou com 52% de tudo o que foi captado</li>
+          <li><b>74%</b>do valor captado foi para o Sudeste, que tem 42% da população</li>
+          <li><b>26%</b>de captação nos projetos que copiam os objetivos da lei, contra 51% na média</li>
+        </ul>
+        <div class="olhar"><strong>Uso numa empresa</strong><p>Escolher projetos para patrocínio e ESG sabendo onde o dinheiro incentivado já está concentrado. O texto do projeto serve de sinal rápido da maturidade de quem propõe.</p></div>
+        <figure><img src="img/rouanet_textos.png" alt="Taxa de captação por tema do resumo do projeto. Oficinas para crianças e jovens captam 73%, projetos que copiam os objetivos da lei captam 26% e gravação de disco com texto modelo 8%." loading="lazy"><figcaption>Análise de texto. Temas do resumo e taxa de captação.</figcaption></figure>
+        <div class="rodape-caso">
+          <a href="painel.html#rouanet">Explorar no painel</a>
+          <a href="https://github.com/eduardopagvieira/rouanet">Código e método</a>
+          <span class="ferr">Python, API, modelos de tópicos, regressão logística, Power BI</span>
+        </div>
       </article>
-      <article class="servico" style="--c:var(--c-bndes)">
-        <h3>Indicadores e painéis de gestão</h3>
-        <p>Defino métricas que respondem à pergunta do negócio e entrego painéis em Power BI que a equipe consegue atualizar sozinha.</p>
-        <p class="ex">Exemplo. Painel da Lei Rouanet em Power BI, com cinco páginas e filtros.</p>
+
+      <article class="caso">
+        <p class="meta">Atendimento e concorrência · Consumidor.gov.br, Senacon</p>
+        <h3>Reclamações de consumidores. Responder não é resolver</h3>
+        <p class="pergunta">Quais setores e empresas concentram as reclamações, e quais resolvem de fato o problema do cliente?</p>
+        <ul class="achados">
+          <li><b>97%</b>das reclamações recebem resposta da empresa</li>
+          <li><b>44%</b>são consideradas resolvidas por quem avaliou o atendimento</li>
+          <li><b>43%</b>das reclamações são de bancos e financeiras, que resolvem 31% delas</li>
+        </ul>
+        <div class="olhar"><strong>Uso numa empresa</strong><p>Comparar o atendimento com o dos concorrentes e acompanhar separadamente a taxa de resposta e a taxa de solução, que contam histórias diferentes.</p></div>
+        <figure><img src="img/consumidor_indice.png" alt="Para as 20 empresas mais reclamadas, o índice oficial de solução fica perto de 80% e o índice entre avaliadas varia de 12% a 78%." loading="lazy"><figcaption>Índice oficial e índice entre avaliadas, nas 20 empresas mais reclamadas.</figcaption></figure>
+        <div class="rodape-caso">
+          <a href="painel.html#consumidor">Explorar no painel</a>
+          <a href="https://github.com/eduardopagvieira/consumidor">Código e método</a>
+          <span class="ferr">Python, pandas, construção de indicadores</span>
+        </div>
       </article>
-      <article class="servico" style="--c:var(--c-cci)">
-        <h3>Monitoramento de redes e reputação</h3>
-        <p>Coleto comentários e métricas de YouTube e Instagram, classifico o conteúdo e transformo tudo em relatórios curtos e periódicos.</p>
-        <p class="ex">Exemplo. Comentários de 14 mil vídeos coletados para o CCI/CEBRAP e relatórios semanais no Observa.</p>
-      </article>
-      <article class="servico" style="--c:var(--c-rouanet)">
-        <h3>Automação de coleta e relatórios</h3>
-        <p>Escrevo scripts que baixam, limpam e consolidam bases de milhões de linhas sem trabalho manual, com checagem de erros.</p>
-        <p class="ex">Exemplo. Coleta de 63 mil projetos pela API do SALIC e de 2,4 milhões de operações do BNDES.</p>
+
+      <article class="caso">
+        <p class="meta">Crédito e setores · BNDES, dados abertos</p>
+        <h3>Financiamentos do BNDES em 24 anos</h3>
+        <p class="pergunta">Para onde vai o crédito do BNDES, por setor, porte e estado, e como isso mudou desde 2002?</p>
+        <ul class="achados">
+          <li><b>4,2%</b>do PIB foi o valor contratado em 2009, na resposta à crise</li>
+          <li><b>0,5%</b>do PIB em 2019, o ponto mais baixo da série</li>
+          <li><b>6%</b>do valor vai para microempresas, que fazem 42% das operações</li>
+        </ul>
+        <div class="olhar"><strong>Uso numa empresa</strong><p>Mapear setores, portes e regiões em que o crédito de longo prazo cresce, com séries corrigidas pela inflação e prontas para relatórios de mercado.</p></div>
+        <figure><img src="img/bndes_pib.png" alt="Valor contratado pelo BNDES em relação ao PIB, de 2002 a 2025, com picos de 4,2% em 2009 e 4,0% em 2012." loading="lazy"><figcaption>Valor contratado em relação ao PIB.</figcaption></figure>
+        <div class="rodape-caso">
+          <a href="painel.html#bndes">Explorar no painel</a>
+          <a href="https://github.com/eduardopagvieira/bndes">Código e método</a>
+          <span class="ferr">Python, parquet, correção pelo IPCA, séries históricas</span>
+        </div>
       </article>
     </div>
   </section>
 
-  <section id="projetos">
-    <p class="eyebrow">Dados abertos</p>
-    <h2>Projetos</h2>
-    <p class="sub">Cada projeto parte de uma pergunta de negócio e passa por coleta, limpeza, análise e apresentação. Os três estão no <a href="painel.html">painel interativo</a>, e o código de cada um está no GitHub.</p>
-
-    <article class="project" style="--c:var(--c-rouanet)">
-      <div class="txt">
-        <span class="tag-proj">Cultura · setor público</span>
-        <h3>Lei Rouanet em números</h3>
-        <p class="q">Quanto do dinheiro aprovado pela Lei Rouanet vira captação de fato, e quem consegue captar?</p>
-        <ul>
-          <li><b>1%</b> dos 28.493 proponentes ficou com <b>52%</b> de tudo o que foi captado. Outros 72% não captaram nada.</li>
-          <li>O Sudeste tem 42% da população e ficou com <b>74%</b> do valor captado entre 2019 e 2025.</li>
-          <li>Painel em Power BI com cinco páginas, filtros por ano, região, área cultural e tipo de proponente.</li>
-        </ul>
-        <p class="uso-emp"><b>Uso numa empresa</b> Planejar patrocínio e ações de ESG sabendo onde o dinheiro incentivado já está concentrado e onde há espaço.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">API</span><span class="tag">pandas</span><span class="tag">matplotlib</span><span class="tag">Power BI</span></div>
-        <div class="acoes"><a class="gh" href="painel.html#rouanet">Explorar no painel</a><a class="gh" href="https://github.com/eduardopagvieira/rouanet">Código no GitHub</a></div>
-      </div>
-      <div>
-        <div class="fig"><img src="img/rouanet_concentracao.png" alt="Curva de concentração da captação. 1% dos proponentes captou 52% do total e 10% captaram 94%." loading="lazy"></div>
-        <div class="fig"><img src="img/rouanet_painel.png" alt="Primeira página do painel em Power BI, com totais aprovado e captado e série anual." loading="lazy"></div>
-        <p class="figcap">Fonte: SALIC, Ministério da Cultura. Coleta pela API, 63.674 projetos.</p>
-      </div>
-    </article>
-
-    <article class="project" style="--c:var(--c-consumidor)">
-      <div class="txt">
-        <span class="tag-proj">Consumidor · empresas</span>
-        <h3>Reclamações no Consumidor.gov.br</h3>
-        <p class="q">Quais setores e empresas concentram as reclamações, e quais de fato resolvem o problema?</p>
-        <ul>
-          <li>As empresas respondem <b>97%</b> das reclamações, mas só <b>44%</b> dos consumidores que avaliaram consideraram o problema resolvido.</li>
-          <li>O índice oficial de 81% conta como resolvida toda reclamação que o consumidor não avaliou.</li>
-          <li>Bancos e financeiras concentram <b>43%</b> das reclamações e resolvem 31% delas.</li>
-        </ul>
-        <p class="uso-emp"><b>Uso numa empresa</b> Comparar o atendimento com o dos concorrentes e acompanhar separadamente o que é responder e o que é resolver.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">indicadores</span><span class="tag">matplotlib</span></div>
-        <div class="acoes"><a class="gh" href="painel.html#consumidor">Explorar no painel</a><a class="gh" href="https://github.com/eduardopagvieira/consumidor">Código no GitHub</a></div>
-      </div>
-      <div>
-        <div class="fig"><img src="img/consumidor_indice.png" alt="Para as 20 empresas mais reclamadas, o índice oficial de solução fica perto de 80% e o índice entre avaliadas varia de 12% a 78%." loading="lazy"></div>
-        <p class="figcap">Fonte: Consumidor.gov.br, Senacon. 2.328.863 reclamações finalizadas em 2025.</p>
-      </div>
-    </article>
-
-    <article class="project" style="--c:var(--c-bndes)">
-      <div class="txt">
-        <span class="tag-proj">Crédito · setores</span>
-        <h3>Financiamentos do BNDES</h3>
-        <p class="q">Para onde vai o crédito do BNDES, por setor, porte e estado, e como isso mudou desde 2002?</p>
-        <ul>
-          <li>O valor contratado foi de <b>4,2%</b> do PIB em 2009, na resposta à crise, para <b>0,5%</b> em 2019.</li>
-          <li>Microempresas fazem 42% das operações e recebem 6% do valor. Grandes empresas ficam com 76%.</li>
-          <li>Valores corrigidos pelo IPCA e cruzados com PIB, população, Selic e TJLP.</li>
-        </ul>
-        <p class="uso-emp"><b>Uso numa empresa</b> Mapear setores, portes e regiões em que o crédito de longo prazo cresce, com séries prontas para relatórios de mercado.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">parquet</span><span class="tag">séries históricas</span></div>
-        <div class="acoes"><a class="gh" href="painel.html#bndes">Explorar no painel</a><a class="gh" href="https://github.com/eduardopagvieira/bndes">Código no GitHub</a></div>
-      </div>
-      <div>
-        <div class="fig"><img src="img/bndes_pib.png" alt="Valor contratado pelo BNDES em relação ao PIB, de 2002 a 2025, com picos de 4,2% em 2009 e 4,0% em 2012." loading="lazy"></div>
-        <p class="figcap">Fonte: BNDES, dados abertos. 2.416.600 operações, R$ 3,9 trilhões em valores de hoje.</p>
-      </div>
-    </article>
-  </section>
-
-  <section id="pesquisa">
-    <p class="eyebrow">Pesquisa e trabalho em equipe</p>
-    <h2>Frentes de pesquisa</h2>
-    <p class="sub">Projetos acadêmicos e contratados em comunicação política. Nos que estão em andamento, descrevo a base e o método, sem resultados.</p>
-    <div class="fronts">
-
-      <article class="front" style="--c:var(--c-cci)">
-        <span class="who">CCI/CEBRAP</span>
-        <h3>Influenciadores políticos no YouTube e no Instagram</h3>
-        <dl>
-          <dt>Base</dt><dd>Comentários de 14.016 vídeos de 9 canais, banco de influenciadores com métricas de público e banco de gastos com anúncios políticos na Meta.</dd>
-          <dt>Coleta</dt><dd>Script em Python com a API do YouTube e rotação automática de chaves. Métricas extraídas do Sprout Social direto do JSON da plataforma.</dd>
-          <dt>Equipe</dt><dd>Bases compartilhadas com o grupo, com padrão de coleta documentado.</dd>
-        </dl>
-      </article>
-
-      <article class="front" style="--c:var(--c-observa)">
-        <span class="who">Observa</span>
-        <h3>Conflito político no Instagram</h3>
-        <dl>
-          <dt>Base</dt><dd>Posts de perfis de direita e de esquerda sobre os temas que dominaram cada semana.</dd>
-          <dt>Método</dt><dd>Cada eixo de conflito é codificado por tipo (direto ou não interativo) e por dimensão do debate (moral, política, temas sociais).</dd>
-          <dt>Entrega</dt><dd>Relatórios semanais curtos, com um resumo numerado e uma seção por eixo.</dd>
-        </dl>
-      </article>
-
-      <article class="front" style="--c:var(--c-redes)">
-        <span class="who">Projeto contratado</span>
-        <h3>Análise de rede de candidatos</h3>
-        <dl>
-          <dt>O que fiz</dt><dd>Montagem da rede de conexões entre candidatos e análise da estrutura da rede.</dd>
-          <dt>Observação</dt><dd>Projeto sob confidencialidade, por isso sem cliente nem resultados.</dd>
-        </dl>
-      </article>
-
-      <article class="front" style="--c:var(--c-mestrado)">
-        <span class="who">Mestrado · PPGPol/UFSCar</span>
-        <h3>Editoriais da grande imprensa sobre reformas econômicas</h3>
-        <dl>
-          <dt>Base</dt><dd>Editoriais da Folha, do Estadão e de O Globo sobre 14 reformas, de 1995 a 2025.</dd>
-          <dt>Método</dt><dd>Livro de códigos próprio, análise de conteúdo em MAXQDA e IRAMUTEQ, teste de confiabilidade entre codificadores.</dd>
-          <dt>Equipe</dt><dd>Coleta feita com a equipe de raspagem do projeto IFA.</dd>
-        </dl>
-      </article>
-
-      <article class="front" style="--c:var(--c-tcc)">
-        <span class="who">TCC · Ciências Sociais/UFSCar · FAPESP</span>
-        <h3>Valência da cobertura sobre ministros do governo Bolsonaro</h3>
-        <dl>
-          <dt>Base</dt><dd>Textos da Folha, do Estadão e de O Globo sobre os ministros do governo.</dd>
-          <dt>Método</dt><dd>Análise de valência (favorável, neutra, contrária), na metodologia de João Feres Júnior.</dd>
-          <dt>Desdobramento</dt><dd>Virou a base empírica do mestrado e um artigo apresentado na ABCP.</dd>
-        </dl>
-      </article>
-
-      <article class="front" style="--c:var(--c-rouanet)">
-        <span class="who">Artigo · RBCS</span>
-        <h3>Bolsonaro e o rótulo de "fake news" contra a imprensa</h3>
-        <dl>
-          <dt>Base</dt><dd>137 trechos das Lives de Quinta (2019 a 2022) com o termo.</dd>
-          <dt>Método</dt><dd>Codificação em MAXQDA com recodificação independente do corpus completo, alfa de Krippendorff de 0,94.</dd>
-          <dt>Equipe</dt><dd>Coautoria com Beatriz Becerra e Gleidylucy Oliveira da Silva.</dd>
-        </dl>
-      </article>
-
+  <section class="secao" id="pesquisa">
+    <div class="rotulo"><span class="n">03</span><h2>Pesquisa e trabalho em equipe</h2></div>
+    <div class="corpo">
+      <p class="intro">Comunicação política, imprensa e redes sociais. Nos projetos em andamento descrevo a base e o método, sem resultados.</p>
+      <table class="tabela">
+        <thead><tr><th>Onde</th><th>Projeto e base</th><th>Método</th></tr></thead>
+        <tbody>
+          <tr><td>CCI/CEBRAP</td><td><span class="t">Influenciadores políticos no YouTube e no Instagram</span>Comentários de 14.016 vídeos de 9 canais, métricas de público e gastos com anúncios políticos na Meta.</td><td>Coleta em Python com a API do YouTube e rotação de chaves. Bases compartilhadas com o grupo, com padrão documentado.</td></tr>
+          <tr><td>Observa</td><td><span class="t">Conflito político no Instagram</span>Posts de perfis de direita e de esquerda sobre os temas de cada semana.</td><td>Codificação por tipo de conflito e dimensão do debate. Relatórios semanais curtos.</td></tr>
+          <tr><td>Projeto contratado</td><td><span class="t">Rede de candidatos</span>Conexões entre candidatos de uma eleição.</td><td>Análise de redes. Sob confidencialidade, sem cliente nem resultados.</td></tr>
+          <tr><td>Mestrado, PPGPol/UFSCar</td><td><span class="t">Editoriais sobre reformas econômicas</span>Folha, Estadão e O Globo sobre 14 reformas, de 1995 a 2025.</td><td>Livro de códigos próprio, MAXQDA e IRAMUTEQ, confiabilidade entre codificadores. Coleta com a equipe do projeto IFA.</td></tr>
+          <tr><td>TCC, UFSCar, FAPESP</td><td><span class="t">Cobertura dos ministros do governo Bolsonaro</span>Textos dos três jornais sobre os ministros.</td><td>Análise de valência (favorável, neutra, contrária). Virou a base do mestrado e um artigo na ABCP.</td></tr>
+          <tr><td>Artigo, RBCS</td><td><span class="t">O rótulo de "fake news" contra a imprensa</span>137 trechos das Lives de Quinta, de 2019 a 2022.</td><td>Codificação em MAXQDA com recodificação independente, alfa de Krippendorff de 0,94. Coautoria com Beatriz Becerra e Gleidylucy Oliveira da Silva.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <section id="competencias">
-    <p class="eyebrow">Ferramentas</p>
-    <h2>Competências</h2>
-    <div class="skills">
-      <div class="skill">
-        <h3>Coleta</h3>
-        <p>APIs públicas, downloads com retomada, raspagem, coleta em paralelo e rotação de chaves.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">requests</span><span class="tag">APIs REST</span></div>
-      </div>
-      <div class="skill">
-        <h3>Tratamento</h3>
-        <p>Bases de milhões de linhas, correção monetária, cruzamento com dados do IBGE e do Banco Central.</p>
-        <div class="tags"><span class="tag">pandas</span><span class="tag">parquet</span><span class="tag">R</span><span class="tag">Excel</span><span class="tag">VBA</span></div>
-      </div>
-      <div class="skill">
-        <h3>Apresentação</h3>
-        <p>Gráficos que se leem de relance, painéis interativos e relatórios curtos para equipe e cliente.</p>
-        <div class="tags"><span class="tag">Power BI</span><span class="tag">matplotlib</span><span class="tag">ggplot2</span></div>
-      </div>
-      <div class="skill">
-        <h3>Análise de conteúdo</h3>
-        <p>Livros de códigos, codificação em equipe, confiabilidade e testes de codificação por modelos de linguagem.</p>
-        <div class="tags"><span class="tag">MAXQDA</span><span class="tag">IRAMUTEQ</span><span class="tag">Krippendorff</span></div>
+  <section class="secao" id="competencias">
+    <div class="rotulo"><span class="n">04</span><h2>Ferramentas</h2></div>
+    <div class="corpo">
+      <dl class="comp">
+        <div><dt>Coleta</dt><dd>APIs públicas, downloads com retomada, raspagem, coleta em paralelo.<span class="ferr">Python · requests · APIs REST</span></dd></div>
+        <div><dt>Tratamento</dt><dd>Bases de milhões de linhas, correção monetária, cruzamento com IBGE e Banco Central.<span class="ferr">pandas · parquet · R · Excel · VBA</span></dd></div>
+        <div><dt>Análise</dt><dd>Indicadores, comparação entre grupos, regressão, análise de redes.<span class="ferr">statsmodels · scikit-learn · R</span></dd></div>
+        <div><dt>Texto</dt><dd>Livros de códigos, codificação em equipe, modelos de tópicos, palavras distintivas, testes com modelos de linguagem.<span class="ferr">MAXQDA · IRAMUTEQ · scikit-learn</span></dd></div>
+        <div><dt>Apresentação</dt><dd>Gráficos que se leem de relance, painéis interativos e relatórios curtos.<span class="ferr">Power BI · matplotlib · ggplot2 · HTML</span></dd></div>
+        <div><dt>Ensino</dt><dd>Cursos de análise de conteúdo no MQ-UFMG, na Compolítica, no PPGCOM-UFMT, no PPGP-UFPA e no LABPOL.<span class="ferr">Explicar método para quem não é da área</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="secao" id="publicacoes">
+    <div class="rotulo"><span class="n">05</span><h2>Publicações e formação</h2></div>
+    <div class="corpo">
+      <ul class="pubs">
+        <li><div class="ano">no prelo</div><div><div class="t">A imprensa sob ataque. O autoritarismo populista de Bolsonaro a partir das Lives de Quinta</div><div class="w">Revista Brasileira de Ciências Sociais · com Beatriz Becerra e Gleidylucy Oliveira da Silva</div></div></li>
+        <li><div class="ano">2024</div><div><div class="t">Análise textual e abordagens qualitativas em Ciência Política</div><div class="w">Capítulo no manual de técnicas de pesquisa qualitativa em Ciência Política (Enap) · com Gleidylucy Oliveira da Silva</div></div></li>
+        <li><div class="ano">2026</div><div><div class="t">Paralelismo programático</div><div class="w">Congresso da ALACIP, Buenos Aires · apresentado em espanhol</div></div></li>
+        <li><div class="ano">2026</div><div><div class="t">Cobertura editorial dos ministros do governo Bolsonaro</div><div class="w">15º Encontro da ABCP, UFPA</div></div></li>
+      </ul>
+      <div class="tres" style="margin-top:40px">
+        <div><h3>Formação</h3><p>Mestrado em Ciência Política, PPGPol/UFSCar, bolsista CAPES.</p><p>Ciências Sociais, UFSCar, com iniciação científica FAPESP.</p></div>
+        <div><h3>Grupos</h3><p>Pesquisador colaborador do CCI/CEBRAP. Membro do DECOS e do LIDEPS, UFSCar.</p></div>
+        <div><h3>Gestão</h3><p>Representante discente do PPGPol (2025 a 2026). Organização da VII Semana de Ciência Política da UFSCar.</p></div>
       </div>
     </div>
   </section>
 
-  <section id="publicacoes">
-    <p class="eyebrow">Produção acadêmica</p>
-    <h2>Publicações e apresentações</h2>
-    <ul class="pubs">
-      <li><div class="yr">no prelo</div><div><div class="t">A imprensa sob ataque. O autoritarismo populista de Bolsonaro a partir das Lives de Quinta</div><div class="w">Revista Brasileira de Ciências Sociais · com Beatriz Becerra e Gleidylucy Oliveira da Silva</div></div></li>
-      <li><div class="yr">2024</div><div><div class="t">Análise textual e abordagens qualitativas em Ciência Política</div><div class="w">Capítulo no Manual de introdução às técnicas de pesquisa qualitativa em Ciência Política (Enap) · com Gleidylucy Oliveira da Silva</div></div></li>
-      <li><div class="yr">2026</div><div><div class="t">Paralelismo programático</div><div class="w">Congresso da ALACIP, Buenos Aires · apresentado em espanhol</div></div></li>
-      <li><div class="yr">2026</div><div><div class="t">Cobertura editorial dos ministros do governo Bolsonaro</div><div class="w">15º Encontro da ABCP, UFPA</div></div></li>
-    </ul>
-  </section>
-
-  <section id="trajetoria">
-    <div class="cols">
-      <div>
-        <h3>Formação</h3>
-        <ul>
-          <li>Mestrado em Ciência Política, PPGPol/UFSCar, bolsista CAPES.</li>
-          <li>Graduação em Ciências Sociais, UFSCar, com iniciação científica FAPESP.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Ensino</h3>
-        <ul>
-          <li>Cursos de análise de conteúdo no MQ-UFMG, na Escola de Métodos da Compolítica, no PPGCOM-UFMT, no PPGP-UFPA e no LABPOL-PPGPol.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Grupos e gestão</h3>
-        <ul>
-          <li>Pesquisador colaborador do CCI/CEBRAP. Membro do DECOS e do LIDEPS, UFSCar.</li>
-          <li>Representante discente do PPGPol (2025 a 2026) e organização da VII Semana de Ciência Política da UFSCar.</li>
-        </ul>
-      </div>
+  <section class="contato" id="contato">
+    <p>Aberto a vagas e projetos em análise de dados, pesquisa e inteligência de mercado.</p>
+    <a class="mail" href="mailto:edu.pagnanvieira@gmail.com">edu.pagnanvieira@gmail.com</a>
+    <div class="outros">
+      <a href="#contato">LinkedIn</a>
+      <a href="https://github.com/eduardopagvieira">GitHub</a>
+      <a href="http://lattes.cnpq.br/2723181992829140">Lattes</a>
+      <a href="https://orcid.org/0009-0004-6524-0010">ORCID</a>
     </div>
   </section>
-
-  <div class="contact" id="contato">
-    <h2>Vamos conversar</h2>
-    <p>Aberto a projetos e vagas em análise de dados, pesquisa e inteligência de mercado.</p>
-    <div class="links">
-      <a class="btn primary" href="mailto:edu.pagnanvieira@gmail.com">edu.pagnanvieira@gmail.com</a>
-      <a class="btn" href="#contato">LinkedIn</a>
-      <a class="btn" href="https://github.com/eduardopagvieira">GitHub</a>
-      <a class="btn" href="http://lattes.cnpq.br/2723181992829140">Lattes</a>
-      <a class="btn" href="https://orcid.org/0009-0004-6524-0010">ORCID</a>
-    </div>
-  </div>
 
 </main>
 
 <footer>
   <div class="wrap">
-    <span>Eduardo Vieira · São Carlos, SP</span>
+    <span>Eduardo Vieira</span>
     <span>Gráficos feitos com dados abertos · novembro de 2026</span>
   </div>
 </footer>
