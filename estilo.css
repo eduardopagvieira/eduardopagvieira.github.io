@@ -141,3 +141,10 @@ img{max-width:100%;display:block}
 .ia{background:var(--lavanda)}
 .pubs .t a{text-decoration:underline;text-decoration-thickness:1.5px}
 .pubs .t a:hover{color:var(--roxo)}
+.ia-nota{margin:24px 0 0;color:var(--tinta-2);font-size:16.5px;max-width:42ch}
+.regras{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--tinta);counter-reset:r}
+.regras li{counter-increment:r;display:grid;grid-template-columns:44px 1fr;padding:16px 0;border-bottom:1px solid rgba(0,0,0,.18)}
+.regras li::before{content:counter(r);font-weight:800;font-size:22px;line-height:1.2;grid-row:span 2}
+.regras h3{margin:0 0 4px;font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.regras p{margin:0;color:var(--tinta-2);font-size:16.5px}
+.ia-empresa{margin:48px 0 0;font-size:clamp(20px,1.9vw,24px);line-height:1.35;max-width:60ch}
