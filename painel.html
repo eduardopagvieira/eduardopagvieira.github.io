@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel de dados</title>
+<meta name="description" content="Painel interativo de Eduardo Vieira com três bases públicas, atendimento ao consumidor, crédito do BNDES e patrocínio pela Lei Rouanet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5f2; --surface:#ffffff; --ink:#16181d; --muted:#5b616d; --line:#e2e0da; --brand:#2a5bd7;
+  --grid:#ebe9e3; --axis:#c3c2b7; --neutral:#a9a69c;
+  --c-rouanet:#c2307a; --c-consumidor:#d4561a; --c-bndes:#178a5b;
+  --font-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --font-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121317; --surface:#1b1d23; --ink:#ecedf0; --muted:#a0a6b2; --line:#2c2f37; --brand:#7aa2ff;
+    --grid:#262930; --axis:#3a3e47; --neutral:#6b6f78;
+    --c-rouanet:#ff6fb0; --c-consumidor:#ff9a5c; --c-bndes:#4fd19a;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121317; --surface:#1b1d23; --ink:#ecedf0; --muted:#a0a6b2; --line:#2c2f37; --brand:#7aa2ff;
+  --grid:#262930; --axis:#3a3e47; --neutral:#6b6f78;
+  --c-rouanet:#ff6fb0; --c-consumidor:#ff9a5c; --c-bndes:#4fd19a;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55}
+a{color:var(--brand);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.mark{font-family:var(--font-display);font-weight:800;font-size:19px;color:var(--ink);text-decoration:none}
+.mark span{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:2px;vertical-align:1px}
+nav{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}
+nav a{color:var(--muted);text-decoration:none;font-weight:600}
+nav a:hover,nav a[aria-current]{color:var(--ink)}
+
+.intro{padding:44px 0 20px;display:grid;gap:12px}
+.eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0}
+.intro h1{font-family:var(--font-display);font-weight:800;font-size:clamp(32px,5vw,50px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.intro p.lede{margin:0;max-width:68ch;font-size:19px}
+
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 0;border-bottom:1px solid var(--line)}
+.tab{font:inherit;font-weight:600;font-size:16px;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:10px 4px 9px;margin-right:14px;cursor:pointer}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--c)}
+.tab .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:1px}
+
+.aba{padding:24px 0 10px}
+.aba[hidden]{display:none}
+.topo{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:18px;align-items:start;margin-bottom:18px}
+.pergunta{font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2.6vw,28px);line-height:1.2;margin:0 0 6px;text-wrap:balance}
+.contexto{margin:0;color:var(--muted);max-width:62ch}
+.uso{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:14px 16px}
+.uso h3{font-family:var(--font-mono);font-size:12.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.uso ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:15.5px}
+
+.filtros{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.filtros label{display:grid;gap:3px;font-size:12.5px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.filtros select{font:inherit;font-size:15px;font-family:var(--font-body);text-transform:none;letter-spacing:0;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 30px 6px 10px;min-width:150px;appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 15px) 55%,calc(100% - 10px) 55%;background-size:5px 5px;background-repeat:no-repeat}
+.filtros button{font:inherit;font-size:14px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;margin-left:auto}
+.filtros button:hover{color:var(--ink);border-color:var(--ink)}
+
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.kpi .rot{font-size:14px;color:var(--muted);line-height:1.3}
+.kpi .val{font-family:var(--font-display);font-weight:800;font-size:clamp(24px,2.6vw,32px);line-height:1.15;font-variant-numeric:tabular-nums;margin-top:4px}
+.kpi .obs{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.35}
+
+.grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 16px 12px;min-width:0}
+.card.largo{grid-column:1/-1}
+.card h3{font-family:var(--font-display);font-weight:700;font-size:17.5px;line-height:1.25;margin:0}
+.card .sub{font-size:14px;color:var(--muted);margin:3px 0 8px}
+.legenda{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px;color:var(--muted);margin:0 0 6px}
+.legenda span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--cor);margin-right:6px;vertical-align:-1px}
+.grafico{width:100%;position:relative}
+.grafico svg{display:block;width:100%;height:auto;overflow:visible}
+.grafico text{font-family:var(--font-body)}
+.nota{font-size:13px;color:var(--muted);margin:8px 0 0}
+
+table.rank{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+table.rank th{font-family:var(--font-mono);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.rank th:first-child,table.rank td:first-child{text-align:left}
+table.rank th button{all:unset;cursor:pointer}
+table.rank th button:hover{color:var(--ink)}
+table.rank th[aria-sort] button::after{content:" ↓"}
+table.rank th[aria-sort="ascending"] button::after{content:" ↑"}
+table.rank td{padding:7px 8px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
+table.rank td.emp{white-space:normal;font-weight:600}
+table.rank td.emp small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.barrinha{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+.barrinha i{display:inline-block;height:8px;border-radius:0 4px 4px 0;background:var(--c);min-width:2px}
+.tabela-rolagem{overflow-x:auto}
+
+.fonte{font-size:13.5px;color:var(--muted);margin:14px 0 0}
+.tt{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--bg);font-size:13.5px;line-height:1.4;padding:7px 10px;border-radius:8px;max-width:260px;opacity:0;transition:opacity .08s;font-variant-numeric:tabular-nums}
+.tt b{display:block;font-weight:600;margin-bottom:2px}
+.tt .lin{display:flex;align-items:center;gap:6px}
+.tt .lin i{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+footer{padding:34px 0 44px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-between}
+
+@media (max-width:900px){
+  .topo{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grade{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  body{font-size:16px}
+  .filtros select{min-width:0;width:100%}
+  .filtros label{flex:1 1 140px}
+  .filtros button{margin-left:0}
+  .tab{margin-right:8px;font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="index.html"><span style="background:var(--c-rouanet)"></span><span style="background:var(--c-consumidor)"></span><span style="background:var(--c-bndes)"></span> Eduardo Vieira</a>
+    <nav aria-label="Seções">
+      <a href="index.html#ajuda">Como ajudo</a>
+      <a href="index.html#projetos">Projetos</a>
+      <a href="painel.html" aria-current="page">Painel</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <p class="eyebrow">Painel interativo</p>
+    <h1>Três bases públicas, lidas com as perguntas que uma empresa faria</h1>
+    <p class="lede">Cada aba parte de uma decisão de negócio e mostra os indicadores que eu entregaria para quem precisa decidir. Use os filtros para explorar. O código de cada análise está no GitHub.</p>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Bases do painel">
+    <button class="tab" role="tab" id="t-consumidor" aria-controls="consumidor" aria-selected="true" style="--c:var(--c-consumidor)"><span class="dot"></span>Atendimento ao consumidor</button>
+    <button class="tab" role="tab" id="t-bndes" aria-controls="bndes" aria-selected="false" tabindex="-1" style="--c:var(--c-bndes)"><span class="dot"></span>Crédito do BNDES</button>
+    <button class="tab" role="tab" id="t-rouanet" aria-controls="rouanet" aria-selected="false" tabindex="-1" style="--c:var(--c-rouanet)"><span class="dot"></span>Patrocínio cultural</button>
+  </div>
+
+  <!-- Consumidor -->
+  <section class="aba" id="consumidor" role="tabpanel" aria-labelledby="t-consumidor" style="--c:var(--c-consumidor)">
+    <div class="topo">
+      <div>
+        <h2 class="pergunta">Quem resolve o problema do cliente, e quem só responde?</h2>
+        <p class="contexto">2,3 milhões de reclamações registradas no Consumidor.gov.br em 2025, contra 1.741 empresas. Responder é quase universal. Resolver, na avaliação do próprio consumidor, é bem mais raro.</p>
+      </div>
+      <div class="uso">
+        <h3>Como isso ajuda uma empresa</h3>
+        <ul>
+          <li>Comparar o atendimento com o dos concorrentes do mesmo setor.</li>
+          <li>Separar o que é responder do que é resolver, e acompanhar os dois.</li>
+          <li>Ler métricas oficiais com cuidado, já que o índice da plataforma conta como resolvida toda reclamação não avaliada.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="filtros">
+      <label>Segmento<select id="c-seg"></select></label>
+      <label>Região do consumidor<select id="c-reg"></select></label>
+      <button type="button" data-limpar="consumidor">Limpar filtros</button>
+    </div>
+    <div class="kpis" id="c-kpis"></div>
+    <div class="grade">
+      <div class="card largo">
+        <h3>Reclamações por mês</h3>
+        <p class="sub">Reclamações finalizadas em 2025</p>
+        <div class="grafico" id="c-mes"></div>
+      </div>
+      <div class="card">
+        <h3>Resolvidas, por segmento</h3>
+        <p class="sub">Parcela resolvida entre as reclamações que o consumidor avaliou</p>
+        <div class="grafico" id="c-seg-graf"></div>
+      </div>
+      <div class="card">
+        <h3>Empresas mais reclamadas</h3>
+        <p class="sub" id="c-rank-sub">Brasil, 2025. Clique no título da coluna para ordenar</p>
+        <div class="tabela-rolagem"><table class="rank" id="c-rank"></table></div>
+      </div>
+    </div>
+    <p class="fonte">Fonte Consumidor.gov.br, Secretaria Nacional do Consumidor, dados abertos. Só um terço dos consumidores avalia o atendimento, então a parcela resolvida descreve esse grupo. <a href="https://github.com/eduardopagvieira/consumidor">Código e método no GitHub</a></p>
+  </section>
+
+  <!-- BNDES -->
+  <section class="aba" id="bndes" role="tabpanel" aria-labelledby="t-bndes" style="--c:var(--c-bndes)" hidden>
+    <div class="topo">
+      <div>
+        <h2 class="pergunta">Para onde vai o crédito do BNDES, e como isso mudou desde 2002?</h2>
+        <p class="contexto">2,4 milhões de operações de financiamento, com valores corrigidos pela inflação. O banco multiplicou o crédito entre 2009 e 2014 e depois voltou a um patamar bem menor.</p>
+      </div>
+      <div class="uso">
+        <h3>Como isso ajuda uma empresa</h3>
+        <ul>
+          <li>Mapear setores, portes e regiões em que o crédito de longo prazo cresce.</li>
+          <li>Comparar períodos com valores na mesma base, já corrigidos pelo IPCA.</li>
+          <li>Montar séries históricas prontas para relatórios de inteligência de mercado.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="filtros">
+      <label>De<select id="b-ini"></select></label>
+      <label>Até<select id="b-fim"></select></label>
+      <label>Setor<select id="b-setor"></select></label>
+      <label>Porte da empresa<select id="b-porte"></select></label>
+      <label>Região<select id="b-reg"></select></label>
+      <button type="button" data-limpar="bndes">Limpar filtros</button>
+    </div>
+    <div class="kpis" id="b-kpis"></div>
+    <div class="grade">
+      <div class="card largo">
+        <h3>Valor contratado por ano</h3>
+        <p class="sub">Em reais de hoje. O período escolhido aparece em destaque</p>
+        <div class="grafico" id="b-ano"></div>
+      </div>
+      <div class="card">
+        <h3>Valor por setor</h3>
+        <p class="sub">No período escolhido</p>
+        <div class="grafico" id="b-setor-graf"></div>
+      </div>
+      <div class="card">
+        <h3>Operações e valor, por porte</h3>
+        <p class="sub">Parcela de cada porte no período escolhido</p>
+        <div class="grafico" id="b-porte-graf"></div>
+      </div>
+      <div class="card largo">
+        <h3>Valor por região</h3>
+        <p class="sub">No período escolhido</p>
+        <div class="grafico" id="b-reg-graf"></div>
+      </div>
+    </div>
+    <p class="fonte">Fonte BNDES, dados abertos de operações diretas e indiretas, automáticas e não automáticas. Valores corrigidos pelo IPCA até o último mês disponível. <a href="https://github.com/eduardopagvieira/bndes">Código e método no GitHub</a></p>
+  </section>
+
+  <!-- Rouanet -->
+  <section class="aba" id="rouanet" role="tabpanel" aria-labelledby="t-rouanet" style="--c:var(--c-rouanet)" hidden>
+    <div class="topo">
+      <div>
+        <h2 class="pergunta">Para onde vai o patrocínio incentivado pela Lei Rouanet?</h2>
+        <p class="contexto">Projetos culturais aprovados de 2019 a 2025. Quase todo o valor captado vem de empresas que deduzem 100% do patrocínio do imposto de renda, e a captação se concentra em poucos proponentes e no Sudeste.</p>
+      </div>
+      <div class="uso">
+        <h3>Como isso ajuda uma empresa</h3>
+        <ul>
+          <li>Planejar patrocínio e ações de ESG sabendo onde o dinheiro já está concentrado.</li>
+          <li>Encontrar regiões e áreas culturais com pouca captação e mais visibilidade por real investido.</li>
+          <li>Ver o mesmo conteúdo no painel em Power BI que está no GitHub.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="filtros">
+      <label>De<select id="r-ini"></select></label>
+      <label>Até<select id="r-fim"></select></label>
+      <label>Região do proponente<select id="r-reg"></select></label>
+      <label>Área cultural<select id="r-area"></select></label>
+      <button type="button" data-limpar="rouanet">Limpar filtros</button>
+    </div>
+    <div class="kpis" id="r-kpis"></div>
+    <div class="grade">
+      <div class="card largo">
+        <h3>Valor aprovado e valor captado, por ano do projeto</h3>
+        <p class="sub">Projetos de 2023 em diante ainda estão captando, então o captado desses anos ainda vai subir</p>
+        <div class="legenda" id="r-ano-leg"></div>
+        <div class="grafico" id="r-ano"></div>
+      </div>
+      <div class="card">
+        <h3>Captado por habitante, por UF</h3>
+        <p class="sub">Valor captado dividido pela população do Censo 2022</p>
+        <div class="grafico" id="r-uf"></div>
+      </div>
+      <div class="card">
+        <h3>Parcela captada, por área cultural</h3>
+        <p class="sub" id="r-area-sub">Valor captado sobre o valor aprovado</p>
+        <div class="grafico" id="r-area-graf"></div>
+        <h3 style="margin-top:22px">Captação e população, por região</h3>
+        <p class="sub">Parcela de cada região no valor captado e na população</p>
+        <div class="legenda" id="r-reg-leg"></div>
+        <div class="grafico" id="r-reg-graf"></div>
+      </div>
+    </div>
+    <p class="fonte">Fonte SALIC, Ministério da Cultura, coleta pela API de dados abertos, e IBGE. <a href="https://github.com/eduardopagvieira/rouanet">Código, método e painel em Power BI no GitHub</a></p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Eduardo Vieira · São Carlos, SP</span>
+    <span>Painel feito com dados abertos, sem bibliotecas externas · <a href="index.html">voltar ao início</a></span>
+  </div>
+</footer>
+
+<div class="tt" id="tt" role="tooltip"></div>
+<script src="dados/painel.js"></script>
+<script>
+(() => {
+  const D = window.PAINEL;
+  const $ = s => document.querySelector(s);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const NS = "http://www.w3.org/2000/svg";
+
+  // ---------- formatação ----------
+  const nf0 = new Intl.NumberFormat("pt-BR", {maximumFractionDigits: 0});
+  const nf1 = new Intl.NumberFormat("pt-BR", {minimumFractionDigits: 1, maximumFractionDigits: 1});
+  const nf2 = new Intl.NumberFormat("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const int = v => nf0.format(v);
+  const pct = (v, c = 0) => isFinite(v) ? (c ? nf1.format(v * 100) : nf0.format(v * 100)) + "%" : "sem dados";
+  const reais = v => {
+    const a = Math.abs(v);
+    if (a >= 1e12) return "R$ " + nf1.format(v / 1e12) + " tri";
+    if (a >= 1e9) return "R$ " + nf1.format(v / 1e9) + " bi";
+    if (a >= 1e6) return "R$ " + nf1.format(v / 1e6) + " mi";
+    if (a >= 1e3) return "R$ " + nf0.format(v / 1e3) + " mil";
+    return "R$ " + nf0.format(v);
+  };
+  const curto = v => {
+    const a = Math.abs(v);
+    if (a >= 1e9) return nf0.format(v / 1e9) + " bi";
+    if (a >= 1e6) return nf0.format(v / 1e6) + " mi";
+    if (a >= 1e3) return nf0.format(v / 1e3) + " mil";
+    return nf0.format(v);
+  };
+  const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+  const soma = (rows, i) => rows.reduce((s, r) => s + r[i], 0);
+  const agrupar = (rows, chave, f) => {
+    const m = new Map();
+    for (const r of rows) { const k = chave(r); if (!m.has(k)) m.set(k, []); m.get(k).push(r); }
+    return [...m].map(([k, rs]) => f(k, rs));
+  };
+  const unicos = (rows, i) => [...new Set(rows.map(r => r[i]))].sort((a, b) => String(a).localeCompare(String(b), "pt-BR"));
+
+  // ---------- dica (tooltip) ----------
+  const tt = $("#tt");
+  function dica(ev, html) {
+    tt.innerHTML = html; tt.style.opacity = 1;
+    const w = tt.offsetWidth, h = tt.offsetHeight;
+    let x = ev.clientX + 14, y = ev.clientY + 14;
+    if (x + w > innerWidth - 8) x = ev.clientX - w - 14;
+    if (y + h > innerHeight - 8) y = ev.clientY - h - 14;
+    tt.style.left = Math.max(8, x) + "px"; tt.style.top = Math.max(8, y) + "px";
+  }
+  const esconder = () => { tt.style.opacity = 0; };
+  const linhaDica = (cor, txt) => `<span class="lin"><i style="background:${cor}"></i>${txt}</span>`;
+
+  // ---------- SVG ----------
+  function el(tag, attrs = {}, pai) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (pai) pai.appendChild(e);
+    return e;
+  }
+  function texto(pai, x, y, t, attrs = {}) { const e = el("text", {x, y, ...attrs}, pai); e.textContent = t; return e; }
+  // barra com só a ponta de dados arredondada (4px), presa na linha de base
+  function pathVert(x, y, w, h, r) {
+    r = Math.min(r, w / 2, h);
+    return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`;
+  }
+  function pathHoriz(x, y, w, h, r) {
+    r = Math.min(r, h / 2, w);
+    return `M${x},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h - r}Q${x + w},${y + h} ${x + w - r},${y + h}H${x}Z`;
+  }
+  function escalaBonita(max) {
+    if (max <= 0) return {max: 1, passo: 0.25};
+    const bruto = max / 4, mag = Math.pow(10, Math.floor(Math.log10(bruto)));
+    const passo = [1, 2, 2.5, 5, 10].map(m => m * mag).find(p => p >= bruto);
+    return {max: Math.ceil(max / passo) * passo, passo};
+  }
+  function novoSvg(alvo, h, rotulo) {
+    alvo.innerHTML = "";
+    const w = Math.max(280, alvo.clientWidth);
+    const svg = el("svg", {viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": rotulo});
+    alvo.appendChild(svg);
+    return {svg, w};
+  }
+
+  // colunas verticais, uma ou duas séries
+  function colunas(alvo, {cats, series, fmtEixo, fmtDica, apagada = () => false, rotulo, rotulosCat = c => c, valoresNoTopo = false}) {
+    const h = 260, m = {t: valoresNoTopo ? 22 : 10, r: 6, b: 26, l: 52};
+    const {svg, w} = novoSvg(alvo, h, rotulo);
+    const iw = w - m.l - m.r, ih = h - m.t - m.b;
+    const max = Math.max(...series.flatMap(s => s.valores), 0);
+    const esc = escalaBonita(max);
+    const y = v => m.t + ih - (v / esc.max) * ih;
+    for (let v = 0; v <= esc.max + 1e-9; v += esc.passo) {
+      el("line", {x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), stroke: v === 0 ? css("--axis") : css("--grid"), "stroke-width": 1}, svg);
+      texto(svg, m.l - 8, y(v) + 4, fmtEixo(v), {"text-anchor": "end", "font-size": 12, fill: css("--muted")});
+    }
+    const banda = iw / cats.length, gap = 2;
+    const largGrupo = Math.min(banda * 0.72, 64), larg = (largGrupo - gap * (series.length - 1)) / series.length;
+    const passoRot = Math.ceil(cats.length / Math.max(1, Math.floor(iw / 44)));
+    cats.forEach((c, i) => {
+      const x0 = m.l + i * banda + (banda - largGrupo) / 2;
+      const opac = apagada(i) ? 0.28 : 1;
+      series.forEach((s, j) => {
+        const v = s.valores[i], hh = Math.max(0, y(0) - y(v));
+        if (hh > 0) el("path", {d: pathVert(x0 + j * (larg + gap), y(v), larg, hh, 4), fill: s.cor, opacity: opac}, svg);
+      });
+      if (valoresNoTopo && series.length === 1 && !apagada(i)) {
+        const v = series[0].valores[i];
+        texto(svg, x0 + largGrupo / 2, y(v) - 6, fmtEixo(v), {"text-anchor": "middle", "font-size": 11.5, fill: css("--muted")});
+      }
+      if (i % passoRot === 0) texto(svg, m.l + i * banda + banda / 2, h - 8, rotulosCat(c), {"text-anchor": "middle", "font-size": 12, fill: css("--muted")});
+      const alvoHover = el("rect", {x: m.l + i * banda, y: m.t, width: banda, height: ih, fill: "transparent"}, svg);
+      const mostrar = ev => dica(ev, `<b>${rotulosCat(c, true)}</b>` + series.map(s => linhaDica(s.cor, `${s.nome} ${fmtDica(s.valores[i])}`)).join(""));
+      alvoHover.addEventListener("mousemove", mostrar);
+      alvoHover.addEventListener("click", mostrar);
+      alvoHover.addEventListener("mouseleave", esconder);
+    });
+  }
+
+  // barras horizontais, uma ou duas séries, rótulos à esquerda e valor na ponta
+  function barras(alvo, {itens, series, fmt, rotulo, destaque = () => false, max}) {
+    const dupla = series.length > 1;
+    const alt = dupla ? 30 : 24, pad = 6;
+    const rotW = Math.min(170, Math.max(70, ...itens.map(it => it.rotulo.length * 7.2)));
+    const h = itens.length * (alt + pad) + 6;
+    const {svg, w} = novoSvg(alvo, h, rotulo);
+    const x0 = rotW + 8, iw = w - x0 - 64;
+    const mx = max ?? Math.max(...itens.flatMap(it => it.valores), 1e-9);
+    itens.forEach((it, i) => {
+      const y0 = 3 + i * (alt + pad);
+      if (destaque(it)) el("rect", {x: 0, y: y0 - 3, width: w, height: alt + 6, rx: 6, fill: css("--grid")}, svg);
+      texto(svg, rotW, y0 + alt / 2 + 4, it.rotulo, {"text-anchor": "end", "font-size": 13, fill: css("--ink"), "font-weight": destaque(it) ? 600 : 400});
+      const hb = dupla ? (alt - 2) / 2 : alt - 6;
+      series.forEach((s, j) => {
+        const v = it.valores[j], ww = Math.max(v > 0 ? 2 : 0, (v / mx) * iw);
+        const yy = dupla ? y0 + j * (hb + 2) : y0 + 3;
+        if (ww > 0) el("path", {d: pathHoriz(x0, yy, ww, hb, 4), fill: s.cor}, svg);
+        texto(svg, x0 + ww + 6, yy + hb / 2 + 4, fmt(v), {"font-size": dupla ? 11.5 : 12.5, fill: css("--muted")});
+      });
+      const alvoHover = el("rect", {x: 0, y: y0 - 3, width: w, height: alt + 6, fill: "transparent"}, svg);
+      const mostrar = ev => dica(ev, `<b>${it.rotulo}</b>` + series.map((s, j) => linhaDica(s.cor, `${s.nome} ${fmt(it.valores[j])}`)).join("") + (it.extra ? `<span>${it.extra}</span>` : ""));
+      alvoHover.addEventListener("mousemove", mostrar);
+      alvoHover.addEventListener("click", mostrar);
+      alvoHover.addEventListener("mouseleave", esconder);
+    });
+  }
+  function legenda(alvo, series) { alvo.innerHTML = series.map(s => `<span style="--cor:${s.cor}">${s.nome}</span>`).join(""); }
+  function kpis(alvo, lista) {
+    alvo.innerHTML = lista.map(k => `<div class="kpi"><div class="rot">${k.rot}</div><div class="val">${k.val}</div>${k.obs ? `<div class="obs">${k.obs}</div>` : ""}</div>`).join("");
+  }
+  function opcoes(sel, valores, todos = "Todos") {
+    sel.innerHTML = (todos ? `<option value="">${todos}</option>` : "") + valores.map(v => `<option value="${v}">${v}</option>`).join("");
+  }
+
+  // ---------- Consumidor ----------
+  const C = D.consumidor;
+  opcoes($("#c-seg"), unicos(C.cubo, 1).filter(s => s !== "Outros").concat("Outros"));
+  opcoes($("#c-reg"), unicos(C.cubo, 2).filter(r => r !== "Não informada"));
+  let ordemRank = {col: "n", asc: false};
+  function consumidor() {
+    const seg = $("#c-seg").value, reg = $("#c-reg").value, cor = css("--c-consumidor");
+    const rows = C.cubo.filter(r => (!seg || r[1] === seg) && (!reg || r[2] === reg));
+    const n = soma(rows, 3), resp = soma(rows, 4), av = soma(rows, 5), res = soma(rows, 6), notas = soma(rows, 7);
+    kpis($("#c-kpis"), [
+      {rot: "Reclamações", val: int(n), obs: seg || reg ? "com os filtros escolhidos" : "1.741 empresas reclamadas"},
+      {rot: "Respondidas pela empresa", val: pct(resp / n, 1), obs: "prazo de até 10 dias"},
+      {rot: "Resolvidas, segundo quem avaliou", val: pct(res / av), obs: `Índice oficial da plataforma ${pct((res + n - av) / n)}`},
+      {rot: "Nota média do atendimento", val: av ? nf2.format(notas / av) : "sem dados", obs: `de 1 a 5, ${pct(av / n)} dos consumidores avaliaram`},
+    ]);
+    const porMes = agrupar(rows, r => r[0], (k, rs) => [k, soma(rs, 3)]).sort((a, b) => a[0].localeCompare(b[0]));
+    colunas($("#c-mes"), {
+      cats: porMes.map(r => r[0]), series: [{nome: "Reclamações", cor, valores: porMes.map(r => r[1])}],
+      fmtEixo: curto, fmtDica: int, valoresNoTopo: true,
+      rotulosCat: (c, longo) => (longo ? ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"] : MESES)[+c.slice(-2) - 1],
+      rotulo: "Reclamações por mês em 2025",
+    });
+    const rowsReg = C.cubo.filter(r => !reg || r[2] === reg);
+    const porSeg = agrupar(rowsReg, r => r[1], (k, rs) => ({rotulo: k, valores: [soma(rs, 6) / soma(rs, 5)], extra: `${int(soma(rs, 3))} reclamações`}))
+      .sort((a, b) => b.valores[0] - a.valores[0]);
+    barras($("#c-seg-graf"), {itens: porSeg, series: [{nome: "Resolvidas", cor}], fmt: v => pct(v), max: 1,
+      destaque: it => it.rotulo === seg, rotulo: "Parcela resolvida entre as avaliadas, por segmento"});
+    // ranking
+    let emp = C.empresas.filter(e => !seg || e[1] === seg).map(e => ({
+      nome: e[0], seg: e[1], n: e[2], resp: e[3] / e[2], sol: e[5] / e[4], nota: e[6] / e[4]}));
+    emp = emp.sort((a, b) => b.n - a.n).slice(0, 12);
+    const {col, asc} = ordemRank;
+    emp.sort((a, b) => (asc ? 1 : -1) * (typeof a[col] === "string" ? a[col].localeCompare(b[col], "pt-BR") : a[col] - b[col]));
+    $("#c-rank-sub").textContent = (seg ? `${seg}, ` : "") + "Brasil, 2025. Clique no título da coluna para ordenar";
+    const th = (c, t) => `<th ${col === c ? `aria-sort="${asc ? "ascending" : "descending"}"` : ""}><button type="button" data-col="${c}">${t}</button></th>`;
+    $("#c-rank").innerHTML = `<thead><tr>${th("nome", "Empresa")}${th("n", "Reclamações")}${th("sol", "Resolvidas")}${th("nota", "Nota")}</tr></thead><tbody>` +
+      emp.map(e => `<tr><td class="emp">${e.nome}${seg ? "" : `<small>${e.seg}</small>`}</td><td>${int(e.n)}</td>` +
+        `<td><span class="barrinha"><i style="width:${Math.round(e.sol * 60)}px"></i>${pct(e.sol)}</span></td><td>${nf2.format(e.nota)}</td></tr>`).join("") +
+      (emp.length ? "" : `<tr><td colspan="4">Nenhuma empresa deste segmento entre as 40 mais reclamadas</td></tr>`) + "</tbody>";
+    $("#c-rank").querySelectorAll("th button").forEach(b => b.addEventListener("click", () => {
+      const c = b.dataset.col;
+      ordemRank = {col: c, asc: ordemRank.col === c ? !ordemRank.asc : c === "nome"};
+      consumidor();
+    }));
+  }
+
+  // ---------- BNDES ----------
+  const B = D.bndes;
+  const anosB = unicos(B.cubo, 0);
+  opcoes($("#b-ini"), anosB, ""); opcoes($("#b-fim"), anosB, "");
+  $("#b-ini").value = anosB[0]; $("#b-fim").value = anosB[anosB.length - 1];
+  opcoes($("#b-setor"), unicos(B.cubo, 1));
+  const PORTES = ["Micro", "Pequena", "Média", "Grande"];
+  opcoes($("#b-porte"), PORTES);
+  opcoes($("#b-reg"), unicos(B.cubo, 3).filter(r => r !== "Não informada"));
+  function bndes() {
+    let ini = +$("#b-ini").value, fim = +$("#b-fim").value;
+    if (ini > fim) { [ini, fim] = [fim, ini]; $("#b-ini").value = ini; $("#b-fim").value = fim; }
+    const setor = $("#b-setor").value, porte = $("#b-porte").value, reg = $("#b-reg").value, cor = css("--c-bndes"), cinza = css("--neutral");
+    const ok = (r, ignorar = "") => (ignorar === "setor" || !setor || r[1] === setor) && (ignorar === "porte" || !porte || r[2] === porte) && (ignorar === "reg" || !reg || r[3] === reg);
+    const noPeriodo = r => r[0] >= ini && r[0] <= fim;
+    const sel = B.cubo.filter(r => ok(r) && noPeriodo(r));
+    const tudoPeriodo = B.cubo.filter(noPeriodo);
+    const valor = soma(sel, 5) * 1e6, ops = soma(sel, 4);
+    const filtrado = setor || porte || reg;
+    kpis($("#b-kpis"), [
+      {rot: "Valor contratado", val: reais(valor), obs: `em reais de hoje, ${ini} a ${fim}`},
+      {rot: "Operações", val: int(ops), obs: "contratos de financiamento"},
+      {rot: "Valor médio por operação", val: ops ? reais(valor / ops) : "sem dados", obs: "o valor médio esconde muita diferença entre portes"},
+      filtrado
+        ? {rot: "Parcela do crédito total", val: pct(valor / (soma(tudoPeriodo, 5) * 1e6), 1), obs: "do que o BNDES contratou no período"}
+        : {rot: "Parcela das grandes empresas", val: pct(soma(sel.filter(r => r[2] === "Grande"), 5) / soma(sel, 5)), obs: `com ${pct(soma(sel.filter(r => r[2] === "Grande"), 4) / ops)} das operações`},
+    ]);
+    const porAno = agrupar(B.cubo.filter(r => ok(r)), r => r[0], (k, rs) => [k, soma(rs, 5) * 1e6]).sort((a, b) => a[0] - b[0]);
+    colunas($("#b-ano"), {
+      cats: porAno.map(r => r[0]), series: [{nome: "Valor contratado", cor, valores: porAno.map(r => r[1])}],
+      fmtEixo: v => curto(v), fmtDica: reais, apagada: i => porAno[i][0] < ini || porAno[i][0] > fim,
+      rotulosCat: (c, longo) => longo ? String(c) : "'" + String(c).slice(2), rotulo: "Valor contratado por ano em reais de hoje",
+    });
+    const base = B.cubo.filter(noPeriodo);
+    const porSetor = agrupar(base.filter(r => ok(r, "setor")), r => r[1], (k, rs) => ({rotulo: k, valores: [soma(rs, 5) * 1e6], extra: `${int(soma(rs, 4))} operações`}))
+      .sort((a, b) => b.valores[0] - a.valores[0]);
+    barras($("#b-setor-graf"), {itens: porSetor, series: [{nome: "Valor", cor}], fmt: reais, destaque: it => it.rotulo === setor, rotulo: "Valor contratado por setor"});
+    const rowsPorte = base.filter(r => ok(r, "porte"));
+    const totOps = soma(rowsPorte, 4), totVal = soma(rowsPorte, 5);
+    const porPorte = PORTES.map(p => { const rs = rowsPorte.filter(r => r[2] === p); return {rotulo: p, valores: [soma(rs, 4) / totOps, soma(rs, 5) / totVal]}; });
+    barras($("#b-porte-graf"), {itens: porPorte, series: [{nome: "Operações", cor: cinza}, {nome: "Valor", cor}], fmt: v => pct(v), max: 1,
+      destaque: it => it.rotulo === porte, rotulo: "Parcela das operações e do valor por porte"});
+    $("#b-porte-graf").insertAdjacentHTML("afterbegin", `<div class="legenda"><span style="--cor:${cinza}">Parcela das operações</span><span style="--cor:${cor}">Parcela do valor</span></div>`);
+    const porReg = agrupar(base.filter(r => ok(r, "reg") && r[3] !== "Não informada"), r => r[3], (k, rs) => ({rotulo: k, valores: [soma(rs, 5) * 1e6], extra: `${int(soma(rs, 4))} operações`}))
+      .sort((a, b) => b.valores[0] - a.valores[0]);
+    barras($("#b-reg-graf"), {itens: porReg, series: [{nome: "Valor", cor}], fmt: reais, destaque: it => it.rotulo === reg, rotulo: "Valor contratado por região"});
+  }
+
+  // ---------- Rouanet ----------
+  const R = D.rouanet;
+  const REGIAO_UF = {RO:"Norte",AC:"Norte",AM:"Norte",RR:"Norte",PA:"Norte",AP:"Norte",TO:"Norte",MA:"Nordeste",PI:"Nordeste",CE:"Nordeste",RN:"Nordeste",PB:"Nordeste",PE:"Nordeste",AL:"Nordeste",SE:"Nordeste",BA:"Nordeste",MG:"Sudeste",ES:"Sudeste",RJ:"Sudeste",SP:"Sudeste",PR:"Sul",SC:"Sul",RS:"Sul",MS:"Centro-Oeste",MT:"Centro-Oeste",GO:"Centro-Oeste",DF:"Centro-Oeste"};
+  const anosR = unicos(R.cubo, 0);
+  opcoes($("#r-ini"), anosR, ""); opcoes($("#r-fim"), anosR, "");
+  $("#r-ini").value = anosR[0]; $("#r-fim").value = anosR[anosR.length - 1];
+  opcoes($("#r-reg"), unicos(R.cubo, 1));
+  opcoes($("#r-area"), unicos(R.cubo, 2), "Todas");
+  function rouanet() {
+    let ini = +$("#r-ini").value, fim = +$("#r-fim").value;
+    if (ini > fim) { [ini, fim] = [fim, ini]; $("#r-ini").value = ini; $("#r-fim").value = fim; }
+    const reg = $("#r-reg").value, area = $("#r-area").value, cor = css("--c-rouanet"), cinza = css("--neutral");
+    const ok = (r, ignorar = "") => (ignorar === "reg" || !reg || r[1] === reg) && (ignorar === "area" || !area || r[2] === area);
+    const noPeriodo = r => r[0] >= ini && r[0] <= fim;
+    const sel = R.cubo.filter(r => ok(r) && noPeriodo(r));
+    const cap = soma(sel, 5);
+    // As taxas usam só projetos com prazo de captação encerrado (até 2022), como na análise do projeto
+    const fechados = sel.filter(r => r[0] <= 2022), base = fechados.length ? fechados : sel;
+    const recorte = fechados.length ? `projetos de ${ini} a ${Math.min(fim, 2022)}, prazo de captação encerrado` : "projetos ainda captando, o número vai subir";
+    const proj = soma(base, 3), apr = soma(base, 4), captaram = soma(base, 6);
+    kpis($("#r-kpis"), [
+      {rot: "Valor captado", val: reais(cap), obs: `projetos de ${ini} a ${fim}`},
+      {rot: "Parcela do aprovado que foi captada", val: pct(soma(base, 5) / apr), obs: recorte},
+      {rot: "Projetos que captaram algum valor", val: pct(captaram / proj), obs: `de ${int(proj)} ${recorte}`},
+      {rot: "Captado por habitante", val: "R$ " + nf0.format(cap / Object.entries(R.populacao).filter(([u]) => !reg || REGIAO_UF[u] === reg).reduce((s, [, p]) => s + p, 0)), obs: reg ? `na região ${reg}` : "média do Brasil"},
+    ]);
+    const porAno = agrupar(R.cubo.filter(r => ok(r)), r => r[0], (k, rs) => [k, soma(rs, 4), soma(rs, 5)]).sort((a, b) => a[0] - b[0]);
+    const sAno = [{nome: "Valor aprovado", cor: cinza, valores: porAno.map(r => r[1])}, {nome: "Valor captado", cor, valores: porAno.map(r => r[2])}];
+    legenda($("#r-ano-leg"), sAno);
+    colunas($("#r-ano"), {cats: porAno.map(r => r[0]), series: sAno, fmtEixo: curto, fmtDica: reais,
+      apagada: i => porAno[i][0] < ini || porAno[i][0] > fim, rotulo: "Valor aprovado e captado por ano do projeto"});
+    const ufRows = R.uf.filter(r => r[0] >= ini && r[0] <= fim && (!reg || r[2] === reg) && (!area || r[3] === area));
+    const porUf = Object.keys(R.populacao).filter(u => !reg || REGIAO_UF[u] === reg).map(u => {
+      const c = ufRows.filter(r => r[1] === u).reduce((s, r) => s + r[4], 0);
+      return {rotulo: u, valores: [c / R.populacao[u]], extra: `${reais(c)} captados`};
+    }).sort((a, b) => b.valores[0] - a.valores[0]);
+    barras($("#r-uf"), {itens: porUf, series: [{nome: "Por habitante", cor}], fmt: v => "R$ " + (v < 10 ? nf1.format(v) : nf0.format(v)), rotulo: "Valor captado por habitante por UF"});
+    const rowsArea = R.cubo.filter(r => ok(r, "area") && noPeriodo(r)), areaFech = rowsArea.filter(r => r[0] <= 2022);
+    $("#r-area-sub").textContent = "Valor captado sobre o valor aprovado, " + (areaFech.length ? `projetos de ${ini} a ${Math.min(fim, 2022)}, com prazo encerrado` : "projetos ainda captando");
+    const porArea = agrupar(areaFech.length ? areaFech : rowsArea, r => r[2], (k, rs) => ({rotulo: k, valores: [soma(rs, 5) / soma(rs, 4)], extra: `${int(soma(rs, 3))} projetos`}))
+      .sort((a, b) => b.valores[0] - a.valores[0]);
+    barras($("#r-area-graf"), {itens: porArea, series: [{nome: "Captado sobre aprovado", cor}], fmt: v => pct(v), max: 1,
+      destaque: it => it.rotulo === area, rotulo: "Parcela captada por área cultural"});
+    const rowsReg = R.cubo.filter(r => ok(r, "reg") && noPeriodo(r)), capTot = soma(rowsReg, 5);
+    const popTot = Object.values(R.populacao).reduce((a, b) => a + b, 0);
+    const sReg = [{nome: "Parcela do valor captado", cor}, {nome: "Parcela da população", cor: cinza}];
+    legenda($("#r-reg-leg"), sReg);
+    const porReg = ["Sudeste", "Sul", "Nordeste", "Centro-Oeste", "Norte"].map(g => ({rotulo: g, valores: [
+      soma(rowsReg.filter(r => r[1] === g), 5) / capTot,
+      Object.entries(R.populacao).filter(([u]) => REGIAO_UF[u] === g).reduce((s, [, p]) => s + p, 0) / popTot]}));
+    barras($("#r-reg-graf"), {itens: porReg, series: sReg, fmt: v => pct(v), max: 1, destaque: it => it.rotulo === reg, rotulo: "Parcela do captado e da população por região"});
+  }
+
+  // ---------- abas, filtros e redesenho ----------
+  const desenhar = {consumidor, bndes, rouanet};
+  let ativa = "consumidor";
+  const tabs = [...document.querySelectorAll(".tab")];
+  function abrir(id, foco) {
+    ativa = id;
+    esconder();
+    tabs.forEach(t => { const sim = t.getAttribute("aria-controls") === id; t.setAttribute("aria-selected", sim); t.tabIndex = sim ? 0 : -1; if (sim && foco) t.focus(); });
+    document.querySelectorAll(".aba").forEach(a => a.hidden = a.id !== id);
+    desenhar[id]();
+    history.replaceState(null, "", "#" + id);
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => abrir(t.getAttribute("aria-controls")));
+    t.addEventListener("keydown", e => {
+      const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (d) abrir(tabs[(i + d + tabs.length) % tabs.length].getAttribute("aria-controls"), true);
+    });
+  });
+  document.querySelectorAll(".aba select").forEach(s => s.addEventListener("change", () => { esconder(); desenhar[ativa](); }));
+  document.querySelectorAll("[data-limpar]").forEach(b => b.addEventListener("click", () => {
+    const aba = b.dataset.limpar;
+    document.querySelectorAll(`#${aba} select`).forEach(s => { s.selectedIndex = s.id.endsWith("-fim") ? s.options.length - 1 : 0; });
+    desenhar[aba]();
+  }));
+  let espera;
+  addEventListener("resize", () => { clearTimeout(espera); espera = setTimeout(() => desenhar[ativa](), 150); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => desenhar[ativa]());
+  document.addEventListener("scroll", esconder, {passive: true});
+  const inicial = location.hash.slice(1);
+  abrir(desenhar[inicial] ? inicial : "consumidor");
+  addEventListener("hashchange", () => { const h = location.hash.slice(1); if (desenhar[h] && h !== ativa) abrir(h); });
+})();
+</script>
+</body>
+</html>

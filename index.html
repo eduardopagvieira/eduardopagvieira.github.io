@@ -104,6 +104,14 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4vw,38px
 .front dt{font-size:12.5px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
 .front dd{margin:0 0 4px;font-size:15.5px}
 
+.ajuda{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.servico{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;border-top:5px solid var(--c);display:flex;flex-direction:column;gap:8px}
+.servico h3{font-family:var(--font-display);font-size:19px;font-weight:700;line-height:1.2;margin:0}
+.servico p{margin:0;font-size:15.5px}
+.servico .ex{font-size:14px;color:var(--muted);margin-top:auto;padding-top:6px;border-top:1px dashed var(--line)}
+.uso-emp{font-size:15.5px;background:color-mix(in srgb,var(--c) 8%,transparent);border-radius:8px;padding:9px 12px;margin:0 0 16px}
+.uso-emp b{color:var(--c)}
+.acoes{display:flex;flex-wrap:wrap;gap:18px}
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .skill{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
 .skill h3{font-family:var(--font-display);font-size:18px;font-weight:700;margin:0 0 6px}
@@ -146,7 +154,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
   <div class="wrap">
     <a class="mark" href="#inicio"><span style="background:var(--c-rouanet)"></span><span style="background:var(--c-consumidor)"></span><span style="background:var(--c-bndes)"></span> Eduardo Vieira</a>
     <nav aria-label="Seções">
+      <a href="#ajuda">Como ajudo</a>
       <a href="#projetos">Projetos</a>
+      <a href="painel.html">Painel</a>
       <a href="#pesquisa">Pesquisa</a>
       <a href="#competencias">Competências</a>
       <a href="#publicacoes">Publicações</a>
@@ -158,11 +168,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
 <main class="wrap" id="inicio">
 
   <div class="hero">
-    <p class="eyebrow">Cientista político · Analista de dados</p>
+    <p class="eyebrow">Análise de dados · Pesquisa · Inteligência de mercado</p>
     <h1>Dados públicos e de redes sociais, da coleta ao <em>gráfico que responde a pergunta</em>.</h1>
-    <p class="lede">Coleto, trato e analiso bases grandes em Python, e entrego os resultados em gráficos, painéis de Power BI e relatórios. Sou mestrando em Ciência Política na UFSCar e pesquisador colaborador do CCI/CEBRAP.</p>
+    <p class="lede">Transformo bases grandes, públicas ou de redes sociais, em indicadores, painéis e relatórios que ajudam uma equipe a decidir. Trabalho em Python e Power BI, da coleta automatizada à apresentação para gestores. Sou cientista político, mestrando na UFSCar e pesquisador colaborador do CCI/CEBRAP.</p>
     <div class="links">
-      <a class="btn primary" href="#projetos">Ver projetos</a>
+      <a class="btn primary" href="painel.html">Ver painel interativo</a>
+      <a class="btn" href="#projetos">Ver projetos</a>
       <a class="btn" href="https://github.com/eduardopagvieira">GitHub</a>
       <a class="btn" href="#contato">LinkedIn</a>
       <a class="btn" href="http://lattes.cnpq.br/2723181992829140">Lattes</a>
@@ -176,10 +187,38 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
     <div class="stat" style="--c:var(--c-cci)"><b>14 mil</b><span>vídeos de YouTube com comentários coletados para o CCI/CEBRAP</span></div>
   </div>
 
+  <section id="ajuda">
+    <p class="eyebrow">Para a sua equipe</p>
+    <h2>Como posso agregar</h2>
+    <p class="sub">O que eu faço no dia a dia de um time de dados, de pesquisa ou de marketing, com exemplos que estão neste site.</p>
+    <div class="ajuda">
+      <article class="servico" style="--c:var(--c-consumidor)">
+        <h3>Inteligência de mercado e concorrência</h3>
+        <p>Comparo a empresa com concorrentes usando bases públicas e indicadores claros, para mostrar onde ela está melhor ou pior.</p>
+        <p class="ex">Exemplo. Ranking de atendimento das empresas mais reclamadas no Consumidor.gov.br.</p>
+      </article>
+      <article class="servico" style="--c:var(--c-bndes)">
+        <h3>Indicadores e painéis de gestão</h3>
+        <p>Defino métricas que respondem à pergunta do negócio e entrego painéis em Power BI que a equipe consegue atualizar sozinha.</p>
+        <p class="ex">Exemplo. Painel da Lei Rouanet em Power BI, com cinco páginas e filtros.</p>
+      </article>
+      <article class="servico" style="--c:var(--c-cci)">
+        <h3>Monitoramento de redes e reputação</h3>
+        <p>Coleto comentários e métricas de YouTube e Instagram, classifico o conteúdo e transformo tudo em relatórios curtos e periódicos.</p>
+        <p class="ex">Exemplo. Comentários de 14 mil vídeos coletados para o CCI/CEBRAP e relatórios semanais no Observa.</p>
+      </article>
+      <article class="servico" style="--c:var(--c-rouanet)">
+        <h3>Automação de coleta e relatórios</h3>
+        <p>Escrevo scripts que baixam, limpam e consolidam bases de milhões de linhas sem trabalho manual, com checagem de erros.</p>
+        <p class="ex">Exemplo. Coleta de 63 mil projetos pela API do SALIC e de 2,4 milhões de operações do BNDES.</p>
+      </article>
+    </div>
+  </section>
+
   <section id="projetos">
     <p class="eyebrow">Dados abertos</p>
     <h2>Projetos</h2>
-    <p class="sub">Cada projeto parte de uma pergunta e passa por coleta, limpeza, análise e apresentação. O código e o passo a passo de cada um estão no GitHub.</p>
+    <p class="sub">Cada projeto parte de uma pergunta de negócio e passa por coleta, limpeza, análise e apresentação. Os três estão no <a href="painel.html">painel interativo</a>, e o código de cada um está no GitHub.</p>
 
     <article class="project" style="--c:var(--c-rouanet)">
       <div class="txt">
@@ -191,8 +230,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
           <li>O Sudeste tem 42% da população e ficou com <b>74%</b> do valor captado entre 2019 e 2025.</li>
           <li>Painel em Power BI com cinco páginas, filtros por ano, região, área cultural e tipo de proponente.</li>
         </ul>
+        <p class="uso-emp"><b>Uso numa empresa</b> Planejar patrocínio e ações de ESG sabendo onde o dinheiro incentivado já está concentrado e onde há espaço.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">API</span><span class="tag">pandas</span><span class="tag">matplotlib</span><span class="tag">Power BI</span></div>
-        <a class="gh" href="https://github.com/eduardopagvieira/rouanet">Código no GitHub</a>
+        <div class="acoes"><a class="gh" href="painel.html#rouanet">Explorar no painel</a><a class="gh" href="https://github.com/eduardopagvieira/rouanet">Código no GitHub</a></div>
       </div>
       <div>
         <div class="fig"><img src="img/rouanet_concentracao.png" alt="Curva de concentração da captação. 1% dos proponentes captou 52% do total e 10% captaram 94%." loading="lazy"></div>
@@ -211,8 +251,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
           <li>O índice oficial de 81% conta como resolvida toda reclamação que o consumidor não avaliou.</li>
           <li>Bancos e financeiras concentram <b>43%</b> das reclamações e resolvem 31% delas.</li>
         </ul>
+        <p class="uso-emp"><b>Uso numa empresa</b> Comparar o atendimento com o dos concorrentes e acompanhar separadamente o que é responder e o que é resolver.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">indicadores</span><span class="tag">matplotlib</span></div>
-        <a class="gh" href="https://github.com/eduardopagvieira/consumidor">Código no GitHub</a>
+        <div class="acoes"><a class="gh" href="painel.html#consumidor">Explorar no painel</a><a class="gh" href="https://github.com/eduardopagvieira/consumidor">Código no GitHub</a></div>
       </div>
       <div>
         <div class="fig"><img src="img/consumidor_indice.png" alt="Para as 20 empresas mais reclamadas, o índice oficial de solução fica perto de 80% e o índice entre avaliadas varia de 12% a 78%." loading="lazy"></div>
@@ -230,8 +271,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-bet
           <li>Microempresas fazem 42% das operações e recebem 6% do valor. Grandes empresas ficam com 76%.</li>
           <li>Valores corrigidos pelo IPCA e cruzados com PIB, população, Selic e TJLP.</li>
         </ul>
+        <p class="uso-emp"><b>Uso numa empresa</b> Mapear setores, portes e regiões em que o crédito de longo prazo cresce, com séries prontas para relatórios de mercado.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">parquet</span><span class="tag">séries históricas</span></div>
-        <a class="gh" href="https://github.com/eduardopagvieira/bndes">Código no GitHub</a>
+        <div class="acoes"><a class="gh" href="painel.html#bndes">Explorar no painel</a><a class="gh" href="https://github.com/eduardopagvieira/bndes">Código no GitHub</a></div>
       </div>
       <div>
         <div class="fig"><img src="img/bndes_pib.png" alt="Valor contratado pelo BNDES em relação ao PIB, de 2002 a 2025, com picos de 4,2% em 2009 e 4,0% em 2012." loading="lazy"></div>
