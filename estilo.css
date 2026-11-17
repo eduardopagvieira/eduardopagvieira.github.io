@@ -148,3 +148,7 @@ img{max-width:100%;display:block}
 .regras h3{margin:0 0 4px;font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
 .regras p{margin:0;color:var(--tinta-2);font-size:16.5px}
 .ia-empresa{margin:48px 0 0;font-size:clamp(20px,1.9vw,24px);line-height:1.35;max-width:60ch}
+
+/* alternador de idioma */
+.barra .lang{border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:1px 9px;font-weight:500;font-size:13px}
+.barra .lang:hover{background:#fff;color:var(--tinta);text-decoration:none}
