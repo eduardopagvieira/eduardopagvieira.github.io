@@ -59,6 +59,7 @@ img{max-width:100%;display:block}
 .projeto.rouanet{background:var(--rouanet)}
 .projeto.consumidor{background:var(--consumidor)}
 .projeto.bndes{background:var(--bndes)}
+.projeto.games{background:#4b3bd4}
 .projeto .fonte{font-size:15px;margin:0 0 14px;opacity:.85}
 .projeto h2{font-weight:900;font-size:clamp(44px,7.4vw,108px);line-height:.9;letter-spacing:-.04em;margin:0 0 40px;max-width:12ch}
 .projeto .duas{align-items:start}
